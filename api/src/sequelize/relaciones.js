@@ -2,8 +2,8 @@
 function generarRelaciones(sequelize) {
 	const { Actividad, Pais } = sequelize.models;
 
-	Actividad.belongsToMany(Pais , {foreignKey:"Actividad_id", through: "Actividad_tiene_pais"});
-	Pais.belongsToMany(Actividad , {foreignKey:"Pais_id", through: "Actividad_tiene_pais"});
+	Actividad.belongsToMany(Pais , {foreignKey:"Actividad_id", through: "Actividad__Pais"});
+	Pais.belongsToMany(Actividad , {foreignKey:"Pais_id", through: "Actividad_Pais"});
     sequelize.sync({force:true})
 }
 
