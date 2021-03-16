@@ -1,6 +1,15 @@
+const {models} = require('../../sequelize/db');
+
 function crearActividad(nombre,dificultad,duracion,temporada){
-    return new Promise(function(res,rej){
-        res("HOlis")
+    return models.Actividad.create({
+        Nombre:nombre,
+        Dificultad:dificultad,
+        Duracion:duracion,
+        Temporada:temporada,
+    })
+    .then(()=>{nombre,dificultad,duracion,temporada})
+    .catch(err=>{
+        return {error:"Error",details:err}
     })
 }
 
