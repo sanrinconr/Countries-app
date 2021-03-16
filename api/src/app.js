@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const index = require('./routes/index.js');
-const countries = require('./routes/countries.js');
+const countries = require('./routes/countries/countries.js');
 const activity = require('./routes/activity.js');
 
 require('./sequelize/db');

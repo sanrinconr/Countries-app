@@ -1,19 +1,5 @@
-const {
-	Router
-} = require('express');
-const {
-	models
-} = require('../sequelize/db');
-
-const router = Router();
 const axios = require("axios")
-router.get("/", function (req, res) {
-	agregar10Primeros()
-		.then((resp) => {
-			res.send(resp)
-		})
-    //No se coloca catch pues en la funcion se maneja el error
-})
+const {models} = require('../../sequelize/db');
 
 function agregar10Primeros() {
 	return axios.get("https://restcountries.eu/rest/v2/all")
@@ -55,4 +41,29 @@ function agregar10Primeros() {
                 })
 		})
 }
-module.exports = router;
+
+function buscarPais(nombre){
+	function buscarPaisLocal(nombre){
+		return models.Pais.findAll({
+			attributes:["Id","Nombre","Continente","Bandera"],
+			where:{
+				Nombre:nombre
+			}
+		})
+		.then(res=>{
+			if(res.length === 0){
+				return null
+			}else{
+				return res.map(pais=>pais.dataValues)
+			}
+		})
+		.catch(err=>console.log(err))
+	}
+	function buscarPaisRemoto(nombre){
+		console.log("Entrando a buscar en api")
+	}
+	return buscarPaisLocal(nombre)
+    
+}
+
+module.exports = {agregar10Primeros, buscarPais}
