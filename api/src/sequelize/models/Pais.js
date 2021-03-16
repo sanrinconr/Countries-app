@@ -18,9 +18,26 @@ module.exports = (sequelize) => {
 			type: DataTypes.STRING(25),
 			allowNull: false,
 		},
+		Bandera:{
+			type: DataTypes.STRING(70),
+			allowNull: false
+		},
 		Capital: {
 			type: DataTypes.STRING(70),
-			allowNull: false,
-		}
-	},{freezeTableName: true,});
+			allowNull: true,
+		},
+		SubRegion: {
+			type: DataTypes.STRING(40),
+			allowNull: true,
+		},
+		Area: {
+			type: DataTypes.STRING(40),
+			allowNull: true,
+		},
+		Poblacion: {
+			type: DataTypes.STRING(12),
+			allowNull: true,
+		},
+	},{freezeTableName: true,
+	timestamps:false});
 };
