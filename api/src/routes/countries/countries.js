@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const {agregar10Primeros, buscarPais, buscarPorId, getActividadesPais} = require("./db")
+const {agregar10Primeros, buscarPaises, buscarPorId, getActividadesPais} = require("./db")
 const router = Router();
 router.get("/", function (req, res) {
     if(!req.query.hasOwnProperty("name")){
@@ -8,7 +8,7 @@ router.get("/", function (req, res) {
 			res.send(resp)
 		})
     }else{
-        buscarPais(req.query.name)
+        buscarPaises(req.query.name)
 		.then(response=>res.send(response))
     }
 })
