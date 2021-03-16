@@ -1,6 +1,7 @@
 const axios = require("axios");
 const {models} = require('../../sequelize/db');
-
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 function agregar10Primeros() {
 	return axios.get("https://restcountries.eu/rest/v2/all")
 		.then(response => {
@@ -42,14 +43,32 @@ function agregar10Primeros() {
 		})
 }
 
-function buscarPais(nombre){
-	return buscarPaisLocal(nombre)
+function buscarPaises(nombre){
+	let salida = []
+	return buscarPaisesLocal(nombre)
+	.then(res=>{
+		if(res){
+			salida = [...salida, ...res]
+		}
+		return buscarPaisesRemoto(nombre)
+	})
+	.then(paisesRemotos=>{
+		salida = [...salida, ...paisesRemotos]
+		//Eliminar duplicados
+		//https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects?noredirect=1
+		salida = salida.filter((v,i,a)=>a.findIndex(t=>(t.Id === v.Id))===i)
+		//V es el elemento, i es el index del elemento actual, a es el arreglo original
+		return salida
+	})
+	.catch(err=>{
+		return {error:"Error al buscar pais por nombre",details:err}
+	})
 
-	function buscarPaisLocal(nombre){
+	function buscarPaisesLocal(nombre){
 		return models.Pais.findAll({
 			attributes:["Id","Nombre","Continente","Bandera"],
 			where:{
-				Nombre:nombre
+				Nombre:{[Sequelize.Op.iLike]: nombre}
 			}
 		})
 		.then(res=>{
@@ -59,12 +78,66 @@ function buscarPais(nombre){
 				return res.map(pais=>pais.dataValues)
 			}
 		})
-		.catch(err=>console.log(err))
 	}
-	function buscarPaisRemoto(nombre){
-		console.log("Entrando a buscar en api")
+	function buscarPaisesRemoto(nombre){
+		return axios.get("https://restcountries.eu/rest/v2/name/"+nombre)
+		.then(res=>res.data)
+		.then(res=>{
+			return res.map(pais=>{
+				return {
+					id:pais.alpha3Code,
+					nombre:pais.name,
+					continente:pais.region,
+					bandera:pais.flag,
+					capital:pais.capital
+				}
+			})
+		})
+		.then(paisesBasicos=>{
+			return _agregarPaisesBasico(paisesBasicos)
+		})
 	}
     
+}
+
+/**
+ * Se agrega un nuevo pais en su version basica
+ */
+function _agregarPaisesBasico(paises){
+		return Promise.all(paises.map(pais=>{
+			return models.Pais.findOrCreate({
+				where:{
+					Id: pais.id,
+					Nombre: pais.nombre,
+					Continente: pais.continente,
+					Bandera: pais.bandera,
+					Capital: pais.capital
+				},
+				default:{
+					Id: pais.id,
+					Nombre: pais.nombre,
+					Continente: pais.continente,
+					Bandera: pais.bandera,
+					Capital: pais.capital
+				}
+			})
+		}))
+		
+		//Si todo fue correcto y se agrego, entonces se retorna data
+		.then(res=>{
+			//Como queda envuelto en un arreglo cada pais (por el promise) y ademas en otro por el find toca reorganizar
+			return res.map(el=>el[0].dataValues)
+		})
+		.then((res)=>{
+			return res.map(pais=>{
+				return {
+					Id:pais.Id, 
+					Nombre:pais.Nombre, 
+					Continente:pais.Continente, 
+					Bandera:pais.Bandera, 
+					Capital:pais.Capital}
+			})
+		})
 }
 function buscarPorId(idPais){
 	return buscarPorIdLocal(idPais)
@@ -193,4 +266,4 @@ function getActividadesPais(idPais){
 	})
 }
 
-module.exports = {agregar10Primeros, buscarPais, buscarPorId, getActividadesPais}
+module.exports = {agregar10Primeros, buscarPaises, buscarPorId, getActividadesPais}
