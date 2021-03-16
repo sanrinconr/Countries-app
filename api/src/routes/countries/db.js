@@ -1,4 +1,4 @@
-const axios = require("axios")
+const axios = require("axios");
 const {models} = require('../../sequelize/db');
 
 function agregar10Primeros() {
@@ -162,6 +162,9 @@ function _agregarDetallePais(paisDetalle){
 	})
 }
 
+/**
+ * Se obtiene el arreglo de las categorias que tiene un pais
+ */
 function getActividadesPais(idPais){
 	return models.Pais.findOne({
 		where:{
@@ -169,10 +172,21 @@ function getActividadesPais(idPais){
 		}
 	})
 	.then(pais=>{
+		//La s es por que sequelize espera un nombre el plural, pero como eso esta desactivado en
+		//el modelo por motivos esteticos se le mete a la mala
 		return pais.getActividads()
 	})
 	.then(actividades=>{
-		return actividades.map(acti=>acti.dataValues)	
+		let data = actividades.map(acti=>{
+			let data = acti.dataValues
+			return {Id:data.Id,
+				Nombre:data.Nombre,
+				Dificultad:data.Dificultad,
+				Duracion:data.Duracion,
+				Temporada:data.Temporada
+			}
+		})
+		return data
 	})
 	.catch(err=>{
 		return {error:"error al obtener actividades",detail:err}
