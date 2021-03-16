@@ -5,7 +5,9 @@ const router = Router();
 router.post("/", function(req,res){
     const {nombre, dificultad,duracion,temporada} = req.body
     crearActividad(nombre,dificultad,duracion,temporada)
-    .then(resp=>res.send(resp))
+    .then(resp=>{
+        res.send(resp)
+    })
 })
 
 

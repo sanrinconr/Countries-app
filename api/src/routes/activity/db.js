@@ -7,7 +7,9 @@ function crearActividad(nombre,dificultad,duracion,temporada){
         Duracion:duracion,
         Temporada:temporada,
     })
-    .then(()=>{nombre,dificultad,duracion,temporada})
+    .then(()=>{
+        return {nombre,dificultad,duracion,temporada}
+    })
     .catch(err=>{
         return {error:"Error",details:err}
     })
