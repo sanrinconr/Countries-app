@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
 		Nombre: {
 			type: DataTypes.STRING(60),
 			allowNull: false,
+			unique:true
 		},
 		Dificultad: {
 			type: DataTypes.STRING(1),
