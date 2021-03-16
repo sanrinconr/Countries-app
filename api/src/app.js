@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const index = require('./routes/index.js');
 const countries = require('./routes/countries/countries.js');
-const activity = require('./routes/activity.js');
+const activity = require('./routes/activity/activity.js');
 
 require('./sequelize/db');
 

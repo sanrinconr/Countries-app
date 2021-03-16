@@ -115,6 +115,7 @@ function buscarPorId(idPais){
 
 			}
 		})
+		.then(res=>_agregarDetallePais(res))
 		.catch(err=>{
 			return {error:"error",details:err}
 		})
@@ -124,17 +125,28 @@ function buscarPorId(idPais){
 
 }
 function _agregarDetallePais(paisDetalle){
-	return models.Pais.findOne({
+	return models.Pais.findOrCreate({
 		where:{
-			Id:paisDetalle.id
+			Id: paisDetalle.id,
+			Nombre: paisDetalle.nombre,
+			Continente: paisDetalle.continente,
+			Bandera: paisDetalle.bandera,
+		},
+		default:{
+			Id: paisDetalle.id,
+			Nombre: paisDetalle.nombre,
+			Continente: paisDetalle.continente,
+			Bandera: paisDetalle.bandera,
 		}
 	})
+	.then(res=>res[0])
 	.then(res=>{
 		res.Capital=paisDetalle.capital
-		res.subregion= paisDetalle.subregion
+		res.subRegion= paisDetalle.subregion
 		res.Area = paisDetalle.area
 		res.Poblacion = paisDetalle.poblacion
 		res.save()
+		return paisDetalle
 	})
 	.catch(err=>{
 		return {err:"error",detail:err}
