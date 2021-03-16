@@ -5,7 +5,7 @@ router.get("/", function (req, res) {
     if(!req.query.hasOwnProperty("name")){
        agregar10Primeros()
 		.then((resp) => {
-			res.send(resp)
+			res.send(resp)  
 		})
     }else{
         buscarPais(req.query.name)
