@@ -3,6 +3,9 @@ const {buscarPorId} = require("../countries/db")
 //Operadores or y and
 const { Op } = require("sequelize");
 
+/**
+ * Creacion de una nueva actividad y se vincula a los paises pedidos
+ */
 function crearActividad(nombre,dificultad,duracion,temporada, paises){
     return models.Actividad.create({
         Nombre:nombre,
@@ -23,12 +26,17 @@ function crearActividad(nombre,dificultad,duracion,temporada, paises){
         return {error:"Error",details:err}
     })
 }
-async function _vincularActividadConPais(objActividad, paises){
+
+/**
+ * Con esta funcion se vinculan los paises pedidos por el usuario a la nueva actividad
+ */
+function _vincularActividadConPais(objActividad, paises){
     _garantizarPaisesEnBD(paises)
     .then(()=>{
         return _obtenerPaises(paises)
     })
     .then(paises=>{
+        //Ese metodo addPais es creado automaticamente por sequelize
         objActividad.addPais(paises)
     })
     .catch(err=>{
@@ -36,6 +44,11 @@ async function _vincularActividadConPais(objActividad, paises){
     })
     
 }
+/**
+ * Ya que el usuario puede pedir paises que no esten el base de datos
+ * antes de hacer cualquier cosa toca validar que estos paises esten el bd
+ * y sino agregarlos desde la api
+ */
 function _garantizarPaisesEnBD(paises){
     return Promise.all(paises.map(pais=>buscarPorId(pais)))
     .then(res=>{
