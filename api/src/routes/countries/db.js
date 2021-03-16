@@ -1,4 +1,4 @@
-const axios = require("axios")
+const axios = require("axios");
 const {models} = require('../../sequelize/db');
 
 function agregar10Primeros() {
@@ -67,15 +67,21 @@ function buscarPais(nombre){
     
 }
 function buscarPorId(idPais){
-	
 	return buscarPorIdLocal(idPais)
 	.then(paisDetallado=>{
 		if(paisDetallado){
-			return _agregarDetallePais(paisDetallado)
+			return paisDetallado
 		}else{
 			return buscarPorIdRemoto(idPais)
 		}
 	})
+	.catch(err=>{
+		return {error:"error al buscar el id",details:err}
+	})
+	/**
+	 * Con esta funcion se valida que ya existan los detalles del pais en local
+	 * sino se devuelve null
+	 */
 	function buscarPorIdLocal(idPais){
 		return models.Pais.findOne({
 			attributes:["Id","Nombre","Continente","Bandera","Capital","SubRegion","Area","Poblacion"],
@@ -99,6 +105,9 @@ function buscarPorId(idPais){
 		})
 		.catch(()=>null)
 	}
+	/**
+	 * Se obtienen los detalles de la api y se meten a la base de datos
+	 */
 	function buscarPorIdRemoto(idPais){
 		return axios.get(`https://restcountries.eu/rest/v2/alpha/${idPais}`)
 		.then(res=>res.data)
@@ -109,21 +118,21 @@ function buscarPorId(idPais){
 				continente:res.region,
 				bandera:res.flag,
 				capital:res.capital,
-				subregion:res.subregion,
+				subRegion:res.subregion,
 				area:res.area,
 				poblacion:res.population
-
 			}
 		})
 		.then(res=>_agregarDetallePais(res))
-		.catch(err=>{
-			return {error:"error",details:err}
-		})
 	}
 
 
 
 }
+
+/**
+ * Se agregan los detalles de un pais ya existente o no
+ */
 function _agregarDetallePais(paisDetalle){
 	return models.Pais.findOrCreate({
 		where:{
@@ -142,15 +151,46 @@ function _agregarDetallePais(paisDetalle){
 	.then(res=>res[0])
 	.then(res=>{
 		res.Capital=paisDetalle.capital
-		res.subRegion= paisDetalle.subregion
+		res.SubRegion= paisDetalle.subRegion
 		res.Area = paisDetalle.area
 		res.Poblacion = paisDetalle.poblacion
 		res.save()
-		return paisDetalle
+		return res.dataValues
 	})
 	.catch(err=>{
-		return {err:"error",detail:err}
+		return {error:"error al agregar detalles del pais",detail:err}
 	})
 }
 
-module.exports = {agregar10Primeros, buscarPais, buscarPorId}
+/**
+ * Se obtiene el arreglo de las categorias que tiene un pais
+ */
+function getActividadesPais(idPais){
+	return models.Pais.findOne({
+		where:{
+			Id:idPais
+		}
+	})
+	.then(pais=>{
+		//La s es por que sequelize espera un nombre el plural, pero como eso esta desactivado en
+		//el modelo por motivos esteticos se le mete a la mala
+		return pais.getActividads()
+	})
+	.then(actividades=>{
+		let data = actividades.map(acti=>{
+			let data = acti.dataValues
+			return {Id:data.Id,
+				Nombre:data.Nombre,
+				Dificultad:data.Dificultad,
+				Duracion:data.Duracion,
+				Temporada:data.Temporada
+			}
+		})
+		return data
+	})
+	.catch(err=>{
+		return {error:"error al obtener actividades",detail:err}
+	})
+}
+
+module.exports = {agregar10Primeros, buscarPais, buscarPorId, getActividadesPais}

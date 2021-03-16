@@ -1,11 +1,11 @@
 const {Router} = require('express');
-const {agregar10Primeros, buscarPais, buscarPorId} = require("./db")
+const {agregar10Primeros, buscarPais, buscarPorId, getActividadesPais} = require("./db")
 const router = Router();
 router.get("/", function (req, res) {
     if(!req.query.hasOwnProperty("name")){
        agregar10Primeros()
 		.then((resp) => {
-			res.send(resp)  
+			res.send(resp)
 		})
     }else{
         buscarPais(req.query.name)
@@ -13,9 +13,10 @@ router.get("/", function (req, res) {
     }
 })
 
-router.get("/:idPais", function(req,res){
-  buscarPorId(req.params.idPais)
-  .then(resp=>res.send(resp))
+router.get("/:idPais", async function(req,res){
+  const pais = await buscarPorId(req.params.idPais)
+  const actividades = await getActividadesPais(req.params.idPais)
+  res.send({...pais, actividades:actividades})
 })
 
 
