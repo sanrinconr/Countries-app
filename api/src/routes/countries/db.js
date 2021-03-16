@@ -44,6 +44,13 @@ function agregar10Primeros() {
 
 function buscarPais(nombre){
 	return buscarPaisLocal(nombre)
+	.then(res=>{
+		if(res){
+			return res
+		}else{
+			return buscarPaisRemoto(nombre)
+		}
+	})
 
 	function buscarPaisLocal(nombre){
 		return models.Pais.findAll({
@@ -62,7 +69,7 @@ function buscarPais(nombre){
 		.catch(err=>console.log(err))
 	}
 	function buscarPaisRemoto(nombre){
-		console.log("Entrando a buscar en api")
+		
 	}
     
 }
