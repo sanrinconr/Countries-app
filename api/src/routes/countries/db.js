@@ -43,6 +43,8 @@ function agregar10Primeros() {
 }
 
 function buscarPais(nombre){
+	return buscarPaisLocal(nombre)
+
 	function buscarPaisLocal(nombre){
 		return models.Pais.findAll({
 			attributes:["Id","Nombre","Continente","Bandera"],
@@ -62,8 +64,81 @@ function buscarPais(nombre){
 	function buscarPaisRemoto(nombre){
 		console.log("Entrando a buscar en api")
 	}
-	return buscarPaisLocal(nombre)
     
 }
+function buscarPorId(idPais){
+	
+	return buscarPorIdLocal(idPais)
+	.then(paisDetallado=>{
+		if(paisDetallado){
+			return _agregarDetallePais(paisDetallado)
+		}else{
+			return buscarPorIdRemoto(idPais)
+		}
+	})
+	function buscarPorIdLocal(idPais){
+		return models.Pais.findOne({
+			attributes:["Id","Nombre","Continente","Bandera","Capital","SubRegion","Area","Poblacion"],
+			where:{
+				Id:idPais
+			}
+		})
+		.then(res=>{
+			if(res.dataValues){
+				return res.dataValues
+			}else{
+				return null
+			}
+		})
+		.then(res=>{
+			if(res.Poblacion !== null){
+				return res
+			}else{
+				return null
+			}
+		})
+		.catch(()=>null)
+	}
+	function buscarPorIdRemoto(idPais){
+		return axios.get(`https://restcountries.eu/rest/v2/alpha/${idPais}`)
+		.then(res=>res.data)
+		.then(res=>{
+			return {
+				id:idPais,
+				nombre:res.name,
+				continente:res.region,
+				bandera:res.flag,
+				capital:res.capital,
+				subregion:res.subregion,
+				area:res.area,
+				poblacion:res.population
 
-module.exports = {agregar10Primeros, buscarPais}
+			}
+		})
+		.catch(err=>{
+			return {error:"error",details:err}
+		})
+	}
+
+
+
+}
+function _agregarDetallePais(paisDetalle){
+	return models.Pais.findOne({
+		where:{
+			Id:paisDetalle.id
+		}
+	})
+	.then(res=>{
+		res.Capital=paisDetalle.capital
+		res.subregion= paisDetalle.subregion
+		res.Area = paisDetalle.area
+		res.Poblacion = paisDetalle.poblacion
+		res.save()
+	})
+	.catch(err=>{
+		return {err:"error",detail:err}
+	})
+}
+
+module.exports = {agregar10Primeros, buscarPais, buscarPorId}
