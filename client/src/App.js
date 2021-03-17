@@ -1,10 +1,15 @@
 import './App.css';
-
+import {
+  Switch,
+  Route
+} from "react-router-dom";
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Countries</h1>
-    </div>
+    <Switch>
+      <Route path="/">
+        Hola! soy la principal
+      </Route>
+    </Switch>
   );
 }
 
