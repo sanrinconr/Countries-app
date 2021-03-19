@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import {connect} from "react-redux"
-import fetchPaises from "../../redux/actions/paises";
+import fetchPaises from "../../redux/actions/fetchPaises";
 import CardPais from "../views/CardPais/CardPais"
 const mapStateToProps = (state)=>{
         return state
