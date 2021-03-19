@@ -2,6 +2,7 @@ import {FETCH_PAISES_REQUEST, FETCH_PAISES_SUCCESS, FETCH_PAISES_ERROR} from "..
 
 const default_paises_reducer={
     paises:[],
+    paginaSiguiente:0,
     consultando:false
 }
 
@@ -22,7 +23,8 @@ export default function paisesReducer(status = default_paises_reducer, action){
             return {
                 ...status,
                 consultando:false,
-                paises: action.payload
+                paises: action.payload,
+                paginaSiguiente: status.paginaSiguiente+1
             }
         default:
             return status
