@@ -2,19 +2,38 @@ const axios = require("axios");
 const {models} = require('../../sequelize/db');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-function agregar10Primeros() {
+function cargarDatosDB() {
+	return _tienePaisesCargados()
+	.then(cant=>{
+		if(cant<=5){
+			return _cargarDesdeApi()
+		}
+		return true
+	})
+	.catch(err=>{
+		return {error:"hubo un error al cargar datos a la base de datos",detail:err}
+	})
+	
+}
+function _tienePaisesCargados(){
+	return models.Pais.findAll({
+		attributes:[
+			[Sequelize.fn("COUNT",Sequelize.col("Id")),"cant_paises"]
+		]
+	})
+	.then(res=>res[0].dataValues.cant_paises)
+}
+function _cargarDesdeApi(){
 	return axios.get("https://restcountries.eu/rest/v2/all")
 		.then(response => {
-                let data = []
-				//Se toman los 10 primeros y se agrega id nombre continente bandera
-				for (let i = 0; i < 10; i++) {
-					data.push({
-						Id: response.data[i].alpha3Code,
-						Nombre: response.data[i].name,
-						Continente: response.data[i].region,
-						Bandera: response.data[i].flag
-					})
-				}
+                let data = response.data.map(pais=>{
+					return {
+						Id: pais.alpha3Code,
+						Nombre: pais.name,
+						Continente: pais.region,
+						Bandera: pais.flag
+					}
+				})
 				//Se crean 10 promesas, cada una agrega un pais
 				//https://stackoverflow.com/questions/57599494/sequelize-findorcreate-loop-not-finding-newly-created-rows
 				return Promise.all(data.map(country => {
@@ -35,12 +54,21 @@ function agregar10Primeros() {
 				}))
                 //Si todo fue correcto y se agrego, entonces se retorna data
                 .then(()=>{
-                    return data
+                    return true
                 })
                 .catch(err=>{
                     return {error:"error", detail:err}
                 })
 		})
+}
+function getPaises(pagina){
+	let paginado = pagina*10
+	return models.Pais.findAll({
+		attributes:["Id","Nombre","Continente","Bandera"],
+		offset:paginado,
+		limit:10,
+	})
+	.then(res=>res.map(pais=>pais.dataValues))
 }
 
 function buscarPaises(nombre){
@@ -266,4 +294,4 @@ function getActividadesPais(idPais){
 	})
 }
 
-module.exports = {agregar10Primeros, buscarPaises, buscarPorId, getActividadesPais}
+module.exports = {cargarDatosDB,getPaises, buscarPaises, buscarPorId, getActividadesPais}
