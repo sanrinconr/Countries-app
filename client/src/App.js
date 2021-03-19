@@ -4,11 +4,12 @@ import {
   Route
 } from "react-router-dom";
 import Principal from './components/views/Principal/Principal';
+import Home from './components/containers/Home';
 function App() {
   return (
     <Switch>
       <Route path="/home">
-        Hola!soy home
+        <Home/>
       </Route>
       <Route path="/">
         <Principal/>
