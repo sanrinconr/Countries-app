@@ -16,13 +16,13 @@ export default function paisesReducer(status = default_paises_reducer, action){
             return {
                 ...status,
                 consultando:false,
-                payload: action.payload
+                paises: action.payload
             }
         case FETCH_PAISES_SUCCESS:
             return {
                 ...status,
                 consultando:false,
-                payload: action.payload
+                paises: action.payload
             }
         default:
             return status

@@ -1,5 +1,5 @@
-import axios from "axios";
-
+import axios from "axios"; 
+import env from "react-dotenv";
 
 export const FETCH_PAISES_REQUEST = "FETCH_PAISES_REQUEST"
 export const FETCH_PAISES_SUCCESS = "FETCH_PAISES_SUCCESS"
@@ -14,7 +14,7 @@ function _fetchPaisesRequest(){
 function _fetchPaisesSuccess(paises){
     return {
         type:FETCH_PAISES_SUCCESS,
-        paylaod:paises
+        payload:paises
     }
 }
 function _fetchPaisesError(err){
@@ -28,9 +28,10 @@ export default function fetchPaises(){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         dispatch(_fetchPaisesRequest())
-        axios.get(process.env.URL_API+"/countries")
+        axios.get(env.URL_API+"countries")
         .then(res=>{
-            dispatch(_fetchPaisesSuccess(res))
+            console.log(res.data)
+            dispatch(_fetchPaisesSuccess(res.data))
         })
         .catch(err=>{
             dispatch(_fetchPaisesError(err))
