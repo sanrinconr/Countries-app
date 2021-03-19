@@ -78,16 +78,17 @@ function buscarPaises(nombre){
 		if(res){
 			salida = [...salida, ...res]
 		}
-		return buscarPaisesRemoto(nombre)
-	})
-	.then(paisesRemotos=>{
-		salida = [...salida, ...paisesRemotos]
-		//Eliminar duplicados
-		//https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects?noredirect=1
-		salida = salida.filter((v,i,a)=>a.findIndex(t=>(t.Id === v.Id))===i)
-		//V es el elemento, i es el index del elemento actual, a es el arreglo original
+		// return buscarPaisesRemoto(nombre)
 		return salida
 	})
+	// .then(paisesRemotos=>{
+	// 	salida = [...salida, ...paisesRemotos]
+	// 	//Eliminar duplicados
+	// 	//https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects?noredirect=1
+	// 	salida = salida.filter((v,i,a)=>a.findIndex(t=>(t.Id === v.Id))===i)
+	// 	//V es el elemento, i es el index del elemento actual, a es el arreglo original
+	// 	return salida
+	// })
 	.catch(err=>{
 		return {error:"Error al buscar pais por nombre",details:err}
 	})
@@ -96,7 +97,7 @@ function buscarPaises(nombre){
 		return models.Pais.findAll({
 			attributes:["Id","Nombre","Continente","Bandera"],
 			where:{
-				Nombre:{[Sequelize.Op.iLike]: nombre}
+				Nombre:{[Sequelize.Op.iLike]: `%${nombre}%`}
 			}
 		})
 		.then(res=>{
@@ -136,17 +137,13 @@ function _agregarPaisesBasico(paises){
 			return models.Pais.findOrCreate({
 				where:{
 					Id: pais.id,
-					Nombre: pais.nombre,
-					Continente: pais.continente,
-					Bandera: pais.bandera,
-					Capital: pais.capital
+					
 				},
 				default:{
 					Id: pais.id,
 					Nombre: pais.nombre,
 					Continente: pais.continente,
 					Bandera: pais.bandera,
-					Capital: pais.capital
 				}
 			})
 		}))
@@ -163,7 +160,7 @@ function _agregarPaisesBasico(paises){
 					Nombre:pais.Nombre, 
 					Continente:pais.Continente, 
 					Bandera:pais.Bandera, 
-					Capital:pais.Capital}
+					}
 			})
 		})
 }
