@@ -23,7 +23,7 @@ export default function paisesReducer(status = default_paises_reducer, action){
             return {
                 ...status,
                 consultando:false,
-                paises: action.payload,
+                paises: [...status.paises, ...action.payload],
                 paginaSiguiente: status.paginaSiguiente+1
             }
         default:
