@@ -7,8 +7,8 @@ const mapStateToProps = (state)=>{
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-        fet: () => {
-                dispatch(fetchPaises())
+        fet: (paginaSiguiente) => {
+                dispatch(fetchPaises(paginaSiguiente))
         }
 })
 
@@ -18,12 +18,15 @@ export default connect(
     mapDispatchToProps
   )(function(props){
     useEffect(()=>{
-        props.fet()
+        props.fet(props.paginaSiguiente)
     },[])
 
     if(Array.isArray(props.paises)){
         return <div>
+        <button onClick={()=>console.log(props.paginaSiguiente)}>Ver posSiguiente</button>
         {props.paises?.map(pais=><CardPais key={pais.Id} id={pais.Id} nombre={pais.Nombre} continente={pais.Continente} bandera={pais.Bandera}/>)}
+        <button onClick={()=>props.fet(props.paginaSiguiente)}>Dame mas</button>
+
     </div>
     }else{
         return <div>
