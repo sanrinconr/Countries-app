@@ -1,5 +1,7 @@
+import ObtenerPaises from "./ObtenerPaises";
+
 export default function Home(){
     return <div>
-        HOla soy home
+        <ObtenerPaises/>
     </div>
 }
