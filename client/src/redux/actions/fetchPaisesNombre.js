@@ -31,7 +31,7 @@ export default function fetchPaisesNombre(nombre, paginaSiguiente){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         //Si se pide la pagina cero entonces se le dice a redux que limpie lo que haya de paises
-        dispatch(_fetchPaisesNombreRequest(paginaSiguiente === "0" ? true : false))
+        dispatch(_fetchPaisesNombreRequest(paginaSiguiente === 0 ? true : false))
         axios.get(env.URL_API+"countries",{params:{name:nombre}})
         .then(res=>{
             console.log(res.data)
