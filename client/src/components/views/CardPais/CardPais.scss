@@ -1,4 +1,20 @@
 .cardPais{
+    padding: 3%;
+    font-size: 20px;
+    .nombreCard{
+        font-size: 30px;
+        margin: 3%;
+    }
+    .banderaCard{
+        width: 60%;
+    }
+    .continenteCard{
+        font-size: 110%;
+        margin: 3%;
+    }
+    display: inline-flex;
+    flex-flow: column nowrap;
     border-style: solid;
-    margin: 10%;
+    align-items: center;
+    
 }
