@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import {connect} from "react-redux"
 import fetchPaises from "../../redux/actions/fetchPaises";
-import CardPais from "../views/CardPais/CardPais"
+import Paises from "./Paises";
 const mapStateToProps = (state)=>{
         return state
 };
@@ -16,24 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(function(props){
-    useEffect(()=>{
-        props.fet(props.paginaSiguiente)
-    },[])
-
-    if(Array.isArray(props.paises)){
-        return <div>
-        {props.paises?.map(pais=><CardPais key={pais.Id} id={pais.Id} nombre={pais.Nombre} continente={pais.Continente} bandera={pais.Bandera}/>)}
-        <button onClick={()=>props.fet(props.paginaSiguiente)}>Dame mas</button>
-
-    </div>
-    }else{
-        return <div>
-            Error
-        </div>
-    }
-    
-})
+  )(Paises)
 
 //   function(props){
 //     console.log(props)
