@@ -1,0 +1,25 @@
+.searchBar{
+    position: relative;
+    margin: 0 auto;
+    width: 20%;
+    padding: 3%;
+    display: flex;
+
+    input[type=text]{
+        padding: 3% 4%;
+        font-size: 110%;
+        border: none;
+        background: none;
+        border-style: solid;
+        border-color: gray;
+        border-width: 1px;
+    }
+    input[type=button]{
+        background: none;
+        border: none;
+        background: rgb(82, 81, 81);
+        padding: 2%;
+        font-size: 140%;
+        color: white;
+    }
+}

@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import "./SearchBar.scss"
 export default function SearchBar({obtenerPaisesPorNombre}){
 
     const [input, setInput] = useState("")
@@ -8,11 +8,8 @@ export default function SearchBar({obtenerPaisesPorNombre}){
         setInput(event.target.value)
     }
 
-    return <div>
-        <input type="text"
-    name="username" 
-    value={input}
-    onChange={handleChange}/>
-    <button onClick={()=>obtenerPaisesPorNombre(input)}>Solitar</button>
+    return <div className="searchBar">
+        <input type="text" value={input} onChange={handleChange}/>
+        <input type="button" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
     </div>
 }
