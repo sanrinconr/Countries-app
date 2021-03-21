@@ -19,7 +19,9 @@ export default function Paises(props){
             }
         )}
         </div>
-        <button onClick={()=>props.fet(props.paginaSiguiente)}>Dame mas</button>
+        <div className="containerMasElementos">
+        <button className = "btn btnGray" onClick={()=>props.fet(props.paginaSiguiente)}>¡Mas paises!</button>
+        </div>
     </div>
     }else{
         return <div>
