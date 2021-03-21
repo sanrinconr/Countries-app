@@ -1,17 +1,15 @@
+import { useEffect, useState } from "react"
 import "./CardPais.scss"
+import prueba from "./img/ala.svg"
+import axios from "axios"
 export default function CardPais({id, nombre, continente, bandera}){
-    return <div className="cardPais">
-        <div>
-         <span>Id: {id}</span>
+   
+
+        return <div className="cardPais">
+        <img className="banderaCard" alt="" src={bandera}/>
+        <span  className="nombreCard">{nombre} ({id})</span>
+        <span className="continenteCard">{continente}</span>
         </div>
-        <div>
-            <span>Nombre: {nombre}</span>
-        </div>
-        <div>
-            <span>Continenete: {continente}</span>
-        </div>
-        <div>
-            <span>Bandera: {bandera}</span>
-        </div>
-    </div>
+
+    
 }

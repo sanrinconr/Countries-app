@@ -1,0 +1,40 @@
+.containerPaises{
+    display: grid;
+    @media (min-width: 400px) {
+        grid-template-columns: 1fr;
+    }
+    @media (min-width: 500px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (min-width: 1000px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media (min-width: 1600px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    
+    row-gap: 20px;
+    column-gap: 10px;
+    align-items: stretch;
+}
+
+.containerMasElementos{
+    display: flex;
+    justify-content: center;
+
+    .btn{
+        background: none;
+        border: none;
+        margin: 5% 0%;
+        outline: none;
+    }
+    .btnGray{
+        background: rgb(82, 81, 81);
+        padding: 10px 15px;
+        font-size: 140%;
+        color: white;
+    
+        border-radius: 10px;
+    }
+}
