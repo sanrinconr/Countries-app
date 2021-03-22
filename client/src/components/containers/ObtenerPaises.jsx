@@ -2,7 +2,7 @@ import {connect} from "react-redux"
 import fetchPaises from "../../redux/actions/fetchPaises";
 import Paises from "./Paises";
 const mapStateToProps = (state)=>{
-        return state
+        return state.paisesReducer
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
