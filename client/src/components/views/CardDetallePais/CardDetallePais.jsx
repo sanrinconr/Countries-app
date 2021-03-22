@@ -1,17 +1,9 @@
 import { useEffect, useState } from "react"
 import "./CardDetallePais.scss"
 export default function CardDetallePais({Id, Nombre, Continente, Bandera, Capital, SubRegion, Area, Poblacion, actividades, getDetalle}){
-    const [lstActividades , setLstActividades] = useState("")
     useEffect(()=>{
         getDetalle()
-        setLstActividades(
-            actividades?.map(actividad=>{
-            return actividad.Nombre
-        }).join(", ")
-        )
-    },[])
-    console.log(lstActividades)
-
+    },[Id])
     return <div className="containerCardDetallePais">
         <div className="header">
             <span>{Nombre}</span>
@@ -23,8 +15,9 @@ export default function CardDetallePais({Id, Nombre, Continente, Bandera, Capita
             <span className="subregion" >SubRegion: {SubRegion}</span>
             <span className="area" >Area: {Area}</span>
             <span className="poblacion" >Poblacion: {Poblacion}</span>
-            <span className="poblacion" >Actividades: {lstActividades}</span>
+            <span className="actividad" >Actividades: {actividades?.map(act=>act.Nombre).join(", ")}</span>
         </div>
+        
         
     </div>
 }

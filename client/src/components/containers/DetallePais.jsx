@@ -7,7 +7,6 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
         getDetalle: () => {
-            console.log(ownProps.id)
                 dispatch(fetchPaisDetalle(ownProps.id))
         }
 })
