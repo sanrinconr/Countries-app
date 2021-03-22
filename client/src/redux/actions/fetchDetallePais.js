@@ -1,5 +1,4 @@
 import axios from "axios"; 
-import env from "react-dotenv";
 
 export const FETCH_DETALLE_PAIS_REQUEST = "FETCH_DETALLE_PAIS_REQUEST"
 export const FETCH_DETALLE_PAIS_SUCCESS = "FETCH_DETALLE_PAIS_SUCCESS"
@@ -28,7 +27,7 @@ export default function fetchDetallePais(id){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         dispatch(_fetchDetallePaisRequest())
-        axios.get(env.URL_API+`countries/${id}`)
+        axios.get(process.env.REACT_APP_URL_API+`countries/${id}`)
         .then(res=>{
             dispatch(_fetchDetallePaisSuccess(res.data))
         })
