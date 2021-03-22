@@ -17,13 +17,13 @@ export default function paiseDetalleReducer(status = default_paises_reducer, act
             return {
                 ...status,
                 consultando:false,
-                paises: action.payload
+                pais: action.payload
             }
         case FETCH_DETALLE_PAIS_ERROR:
             return {
                 ...status,
                 consultando:false,
-                paises: {},
+                pais: {},
                 error:action.payload
             }   
         default:
