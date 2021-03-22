@@ -61,14 +61,18 @@ function _cargarDesdeApi(){
                 })
 		})
 }
-function getPaises(pagina){
+function getPaises(pagina){	
 	let paginado = pagina*10
 	return models.Pais.findAll({
 		attributes:["Id","Nombre","Continente","Bandera"],
 		offset:paginado,
 		limit:10,
+		order: Sequelize.col('Nombre'),
 	})
 	.then(res=>res.map(pais=>pais.dataValues))
+	.catch(err=>{
+		return {error:"No se pudo obtener los paises", details:err}
+	})
 }
 
 function buscarPaises(nombre){
