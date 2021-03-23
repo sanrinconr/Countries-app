@@ -1,6 +1,11 @@
+import ButtonVolver from "../common/ButtonVolver/ButtonVolver"
+import FormNuevaActividad from "./FormNuevaActividad/FormNuevaActividad"
 import "./NuevaActividad.scss"
 export default function NuevaActividad(){
-    return <div className="containerNuevaActividad">
-        <span>Nueva actividad</span>
+    return <div>
+        <div className="containerNuevaActividad">
+        <FormNuevaActividad/>
+    </div>
+    <ButtonVolver/>
     </div>
 }
