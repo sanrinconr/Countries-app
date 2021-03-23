@@ -1,0 +1,27 @@
+.containerButtonVolver{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    .buttonVolver{
+        border-style: solid;
+        border-color: rgb(82, 81, 81);
+        border-width: 1px;
+        background: rgb(82, 81, 81);
+        padding: 10px 15px;
+        font-size: 140%;
+        color: white;
+        outline: none;
+        margin-top: 15px;  
+        border-radius: 30px;  
+        transition-duration: 0.4s;    
+    }
+    .buttonVolver:hover{
+        border-style: solid;
+        border-color: rgb(82, 81, 81);
+        border-width: 1px;
+        color: black;
+        background:none;
+
+    }
+}
