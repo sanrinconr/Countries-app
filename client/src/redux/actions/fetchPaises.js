@@ -1,5 +1,4 @@
 import axios from "axios"; 
-import env from "react-dotenv";
 
 export const FETCH_PAISES_REQUEST = "FETCH_PAISES_REQUEST"
 export const FETCH_PAISES_SUCCESS = "FETCH_PAISES_SUCCESS"
@@ -28,7 +27,7 @@ export default function fetchPaises(paginaSiguiente){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         dispatch(_fetchPaisesRequest())
-        axios.get(env.URL_API+"countries",{params:{page:paginaSiguiente}})
+        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente}})
         .then(res=>{
             console.log(res.data)
             dispatch(_fetchPaisesSuccess(res.data))

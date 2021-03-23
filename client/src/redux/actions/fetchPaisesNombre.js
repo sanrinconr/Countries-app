@@ -1,5 +1,4 @@
 import axios from "axios"; 
-import env from "react-dotenv";
 
 export const FETCH_PAISES_NOMBRE_REQUEST = "FETCH_PAISES_NOMBRE_REQUEST"
 export const FETCH_PAISES_NOMBRE_SUCCESS = "FETCH_PAISES_NOMBRE_SUCCESS"
@@ -32,7 +31,7 @@ export default function fetchPaisesNombre(nombre, paginaSiguiente){
     return (dispatch) =>{
         //Si se pide la pagina cero entonces se le dice a redux que limpie lo que haya de paises
         dispatch(_fetchPaisesNombreRequest(paginaSiguiente === 0 ? true : false))
-        axios.get(env.URL_API+"countries",{params:{name:nombre}})
+        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{name:nombre}})
         .then(res=>{
             console.log(res.data)
             dispatch(_fetchPaisesNombreSuccess(res.data))

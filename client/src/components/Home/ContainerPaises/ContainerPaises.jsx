@@ -1,7 +1,10 @@
+import {connect} from "react-redux"
 import { useEffect } from "react"
-import CardPais from "../views/CardPais/CardPais"
-import "./Paises.scss"
-export default function Paises(props){
+import fetchPaises from "../../../redux/actions/fetchPaises";
+import CardPais from "./CardPais/CardPais"
+
+import "./ContainerPaises.scss"
+function ContainerPaises(props){
     useEffect(()=>{
         props.fet(props.paginaSiguiente)
     },[])
@@ -30,3 +33,19 @@ export default function Paises(props){
     }
     
 }
+
+const mapStateToProps = (state)=>{
+    return state.paisesReducer
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    fet: (paginaSiguiente) => {
+            dispatch(fetchPaises(paginaSiguiente))
+    }
+})
+
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps
+)(ContainerPaises)
