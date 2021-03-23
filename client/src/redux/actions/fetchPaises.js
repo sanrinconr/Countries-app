@@ -1,3 +1,6 @@
+/**
+ * Este conjunto de acciones se encarga de obtener los paises que se observan en \home
+ */
 import axios from "axios"; 
 
 export const FETCH_PAISES_REQUEST = "FETCH_PAISES_REQUEST"

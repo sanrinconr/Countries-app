@@ -1,3 +1,9 @@
+/**
+ * Pagina inicial de la aplicacion
+ * 
+ * Se utiliza la etiqueta picture y source para asi tener la posibilidad de
+ * mostrar una imagen adecuada dependiendo el tamaño del display del cliente 
+ */
 import { Link } from "react-router-dom"
 import playaMedium from "./img/playaMedium.jpg"
 import playaSmall from "./img/playaSmall.jpg"

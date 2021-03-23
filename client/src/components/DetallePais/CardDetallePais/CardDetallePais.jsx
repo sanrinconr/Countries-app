@@ -1,3 +1,8 @@
+/**
+ * Este componente renderiza la card del detalle del pais, todos los parametros
+ * son obtenidos desde redux, es por ello que se utiliza connect para poder acceder a estos
+ * al renderizarse lo primero que hara sera pedir al back el detalle de ese pais
+ */
 import {connect} from "react-redux"
 import { useEffect } from "react"
 import fetchPaisDetalle from "../../../redux/actions/fetchDetallePais"

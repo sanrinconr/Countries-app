@@ -1,3 +1,7 @@
+/**
+ * Este conjunto de acciones se encargan de representar la solicitud del detalle de un pais
+ * al backe-end
+ */
 import axios from "axios"; 
 
 export const FETCH_DETALLE_PAIS_REQUEST = "FETCH_DETALLE_PAIS_REQUEST"

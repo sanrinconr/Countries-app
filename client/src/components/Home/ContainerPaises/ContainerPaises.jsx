@@ -1,3 +1,13 @@
+/**
+ * Este contenedor se encarga de renderizar cada card de pais
+ * 
+ * Explicacion sobre pagina siguiente:
+ * El back devuelve de a 10 paises por pagina, de modo que se tiene la pagina 0,1,2,3,4....
+ * en redux se va guardando la pagina siguiente a consultar por lo que al 
+ * llamar la funcion de traer paises se le pasa este parametro pagina siguiente
+ * si la consulta fue correcta en redux este valor cambia +1 logrando asi un paginado dinamico tipo
+ * instagram
+ */
 import {connect} from "react-redux"
 import { useEffect } from "react"
 import fetchPaises from "../../../redux/actions/fetchPaises";

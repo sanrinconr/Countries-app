@@ -1,3 +1,6 @@
+/**
+ * Conjunto de acciones encargado de traer paises por nombre
+ */
 import axios from "axios"; 
 
 export const FETCH_PAISES_NOMBRE_REQUEST = "FETCH_PAISES_NOMBRE_REQUEST"
