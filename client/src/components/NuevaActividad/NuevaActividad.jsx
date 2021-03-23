@@ -3,9 +3,9 @@ import FormNuevaActividad from "./FormNuevaActividad/FormNuevaActividad"
 import "./NuevaActividad.scss"
 export default function NuevaActividad(){
     return <div>
-        <div className="containerNuevaActividad">
+        <div>
         <FormNuevaActividad/>
-    </div>
+        </div>
     <ButtonVolver/>
     </div>
 }
