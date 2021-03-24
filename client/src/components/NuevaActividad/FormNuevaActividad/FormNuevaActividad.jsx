@@ -10,6 +10,7 @@ export default function FormNuevaActividad(){
         duracion:"250",
         temporada:"verano",
       })
+      const [consultando, setConsultando] = useState(false)
       function handleChangeActividad(event){
         setInputActividad({
           ...inputActividad,
@@ -37,14 +38,18 @@ export default function FormNuevaActividad(){
       }
 
       function guardarActividad(e){
-          e.preventDefault()
+        e.preventDefault()
+        setConsultando(true)
         const {nombre, dificultad,duracion,temporada} = inputActividad
         axios.post(process.env.REACT_APP_URL_API+"activity",{
             nombre, dificultad,duracion,temporada,paises:Object.keys(paises).map(claveId=>{
                 return paises[claveId].value
             })
         })
-        .then(res=>console.log(res.data))
+        .then(res=>{
+            setConsultando(false)
+            console.log(res.data)
+        })
         .catch(err=>console.log(err.data))
       }
       return (
@@ -57,7 +62,7 @@ export default function FormNuevaActividad(){
                     <div className="izquierda">
                         <div>
                             <input type="text"
-                            //   className={errors.username ? 'danger':''} 
+                            className="input" 
                             name="nombre" 
                             placeholder="Nombre"
                             value={inputActividad.nombre}
@@ -86,7 +91,7 @@ export default function FormNuevaActividad(){
                         </div>
                         <div>
                             <input type="text"
-                            // className={errors.password ? 'danger':''} 
+                            className="input"
                             name="duracion"
                             placeholder="Duracion (dias)"
                             value={inputActividad.duracion}
@@ -101,7 +106,7 @@ export default function FormNuevaActividad(){
                              <input type="text"
                              id={claveId}
                              key={claveId}
-                            //  className={errors.password ? 'danger':''} 
+                             className="input"
                              name="pais"
                              placeholder="Pais"
                              value={paises[claveId].value}
@@ -111,7 +116,7 @@ export default function FormNuevaActividad(){
                     <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
                 </div>
                 <div>
-                    <input onClick={guardarActividad} type="submit" value="Crear actividad!"/>
+                    <input className={consultando?"desactivado":"input"} onClick={guardarActividad} type="submit" value="Crear actividad!"/>
                 </div>
 
           </form>

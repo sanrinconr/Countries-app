@@ -69,7 +69,7 @@
                 background-color: green;
             }
         }
-        input{
+        .input{
             background-color: none;
             border-style: solid;
             border-radius: 10px;
@@ -80,13 +80,21 @@
             outline: none;
             transition-duration: 0.4s;
             box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.219);
-
         }
-        input:hover{
+        .input:hover{
             border-color: grey;
         }
-        input:focus{
-            border-color: green;
+        .desactivado{
+            background-color: grey;
+            border-style: solid;
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: grey;
+            color: white;
+            padding: 3%;
+            font-size: 20px;
+            outline: none;
+            transition-duration: 0.4s;
         }
     }
 }
