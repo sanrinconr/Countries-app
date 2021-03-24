@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react"
+import {useState } from "react"
+import axios from "axios"
 import "./FormNuevaActividad.scss"
 export default function FormNuevaActividad(){
     const [cantPais, setCantPais] = useState(1)
     const [paises, setPaises] = useState({0:{value:""}})
     const [inputActividad, setInputActividad] = useState({
-        nombre: "",
-        dificultad: "",
-        duracion:"",
-        temporada:"",
+        nombre: "cala",
+        dificultad: "1",
+        duracion:"250",
+        temporada:"verano",
       })
-      const [errors, setErrors] = useState()
       function handleChangeActividad(event){
         setInputActividad({
           ...inputActividad,
           [event.target.name]: event.target.value
         })
-        // setErrors(validate({
-        //   ...input,
-        //   [event.target.name]: event.target.value
-        // }))
       }
       function handleChangePais(event){
         //https://stackoverflow.com/questions/29537299/react-how-to-update-state-item1-in-state-using-setstate
@@ -39,6 +35,18 @@ export default function FormNuevaActividad(){
         setPaises(original)
         setCantPais(cantPais+1)
       }
+
+      function guardarActividad(e){
+          e.preventDefault()
+        const {nombre, dificultad,duracion,temporada} = inputActividad
+        axios.post(process.env.REACT_APP_URL_API+"activity",{
+            nombre, dificultad,duracion,temporada,paises:Object.keys(paises).map(claveId=>{
+                return paises[claveId].value
+            })
+        })
+        .then(res=>console.log(res.data))
+        .catch(err=>console.log(err.data))
+      }
       return (
           <div className="formNuevaActividad" >
             <form >
@@ -56,32 +64,31 @@ export default function FormNuevaActividad(){
                             onChange={handleChangeActividad}/>
                         </div>
                         <div>
-                            <input type="text"
-                            //   className={errors.username ? 'danger':''} 
-                            name="temporada" 
-                            placeholder="Temporada"
-                            value={inputActividad.temporada}
-                            onChange={handleChangeActividad}/>
-                        </div>
-                        <div>
-                            <input type="submit" 
-                            value="Registrarse!"/>
+                            <label> Temporada: </label>
+                            <select name="temporada" onChange={handleChangeActividad} value={inputActividad.temporada}>
+                                <option value="verano">Verano</option>
+                                <option value="otoño">Otoño</option>
+                                <option value="invierno">Invierno</option>
+                                <option value="primavera">Primavera</option>
+                            </select>
                         </div>
                     </div>
                     <div className="derecha">
                         <div>
-                            <input type="text"
-                            // className={errors.password ? 'danger':''} 
-                            name="dificultad"
-                            placeholder="Dificultad"
-                            value={inputActividad.dificultad}
-                            onChange={handleChangeActividad}/>
+                        <label> Dificultad: </label>
+                            <select name="dificultad" onChange={handleChangeActividad} value={inputActividad.dificultad}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
                         </div>
                         <div>
                             <input type="text"
                             // className={errors.password ? 'danger':''} 
                             name="duracion"
-                            placeholder="Duracion"
+                            placeholder="Duracion (dias)"
                             value={inputActividad.duracion}
                             onChange={handleChangeActividad}/>
                         </div>
@@ -102,6 +109,9 @@ export default function FormNuevaActividad(){
                          </div>
                     })}
                     <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
+                </div>
+                <div>
+                    <input onClick={guardarActividad} type="submit" value="Crear actividad!"/>
                 </div>
 
           </form>
