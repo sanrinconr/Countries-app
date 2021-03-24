@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {connect} from "react-redux"
 
 import fetchPaises from "../../../redux/actions/fetchPaises"
 import changeFiltroContinentes from "../../../redux/actions/filtroContinentes"
 
 import "./Filtros.scss"
-function Filtros({cambiarOrden, paginaSiguiente, orden, setContinente}){
+function Filtros({cambiarOrden, paginaSiguiente, orden, filtroContinentes, setContinente}){
     function handleChangeContinente(e){
         e.preventDefault()
         setContinente(e.target.value)
@@ -30,7 +30,7 @@ function Filtros({cambiarOrden, paginaSiguiente, orden, setContinente}){
                     </select>
                 </div>
                 <div className="filtroContinente">
-                    <select className='select' name="continente"  onChange={handleChangeContinente}>
+                    <select value= {filtroContinentes} className='select' name="continente"  onChange={handleChangeContinente}>
                         <option value="Todos">Todos</option>
                         <option value="Asia">Asia</option>
                         <option value="Africa">Africa</option>
