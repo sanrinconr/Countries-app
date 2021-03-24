@@ -15,15 +15,16 @@ import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
 import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
-function ContainerPaises(props){
+function ContainerPaises({fet, paises}){
     useEffect(()=>{
-        props.fet(props.paginaSiguiente)
+        //Como se ejecuta una sola vez pues se dejan valores fijos
+        fet(0, "ASC")
     },[])
 
-    if(Array.isArray(props.paises)){
+    if(Array.isArray(paises)){
         return <div>
         <div className="containerPaises">
-        {props.paises?.map(pais=>{
+        {paises?.map(pais=>{
             return  <CardPais
             key={pais.Id} 
             id={pais.Id} 
@@ -33,7 +34,7 @@ function ContainerPaises(props){
             }
         )}
         </div>
-        <ButtonMasPaises fet={props.fet} paginaSiguiente={props.paginaSiguiente}/>
+        <ButtonMasPaises/>
     </div>
     }else{
         return <div>
@@ -43,13 +44,14 @@ function ContainerPaises(props){
     
 }
 
+//Para conocer que paises existen actualmente
 const mapStateToProps = (state)=>{
     return state.paisesReducer
 };
-
+//Para poder pedir los primeros 10 paises
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    fet: (paginaSiguiente) => {
-            dispatch(fetchPaises(paginaSiguiente))
+    fet: (paginaSiguiente, orden) => {
+            dispatch(fetchPaises(paginaSiguiente, orden))
     }
 })
 
