@@ -4,7 +4,8 @@ import { FETCH_PAISES_NOMBRE_ERROR, FETCH_PAISES_NOMBRE_REQUEST, FETCH_PAISES_NO
 const default_paises_reducer={
     paises:[],
     paginaSiguiente:0,
-    consultando:false
+    consultando:false,
+    orden:"ASC"
 }
 
 export default function paisesReducer(status = default_paises_reducer, action){
@@ -21,12 +22,23 @@ export default function paisesReducer(status = default_paises_reducer, action){
                 paises: action.payload
             }
         case FETCH_PAISES_SUCCESS:
-            return {
-                ...status,
-                consultando:false,
-                paises: [...status.paises, ...action.payload],
-                paginaSiguiente: status.paginaSiguiente+1
+            if(action.payload.orden === status.orden){
+                return {
+                    ...status,
+                    consultando:false,
+                    paises: [...status.paises, ...action.payload.paises],
+                    paginaSiguiente: status.paginaSiguiente+1
+                }
+            }else{
+                return {
+                    ...status,
+                    consultando:false,
+                    paises: [...action.payload.paises],
+                    paginaSiguiente: 1,
+                    orden:action.payload.orden
+                }
             }
+            
         
         case FETCH_PAISES_NOMBRE_REQUEST:
             return {

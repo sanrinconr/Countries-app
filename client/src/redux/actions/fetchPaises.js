@@ -13,10 +13,10 @@ function _fetchPaisesRequest(){
         type:FETCH_PAISES_REQUEST,
     }
 }
-function _fetchPaisesSuccess(paises){
+function _fetchPaisesSuccess(paises, orden){
     return {
         type:FETCH_PAISES_SUCCESS,
-        payload:paises
+        payload:{paises, orden}
     }
 }
 function _fetchPaisesError(err){
@@ -26,14 +26,14 @@ function _fetchPaisesError(err){
     }
 }
 
-export default function fetchPaises(paginaSiguiente){
+export default function fetchPaises(paginaSiguiente, orden){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         dispatch(_fetchPaisesRequest())
-        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente}})
+        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente, orden}})
         .then(res=>{
             console.log(res.data)
-            dispatch(_fetchPaisesSuccess(res.data))
+            dispatch(_fetchPaisesSuccess(res.data, orden))
         })
         .catch(err=>{
             dispatch(_fetchPaisesError(err))
