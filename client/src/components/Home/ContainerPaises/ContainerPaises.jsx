@@ -18,7 +18,9 @@ import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
 function ContainerPaises({fet, paises, filtroContinentes}){
     useEffect(()=>{
         //Como se ejecuta una sola vez pues se dejan valores fijos
-        fet(0, "ASC")
+        if(paises.length === 0){
+            fet(0, "ASC")
+        }
     },[])
 
     if(Array.isArray(paises)){
