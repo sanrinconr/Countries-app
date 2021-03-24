@@ -4,18 +4,8 @@ import {connect} from "react-redux"
 import fetchPaises from "../../../redux/actions/fetchPaises"
 import changeFiltroContinentes from "../../../redux/actions/filtroContinentes"
 
+import "./Filtros.scss"
 function Filtros({cambiarOrden, paginaSiguiente, orden, setContinente}){
-    const [input , setInput] = useState({
-        continente:"",
-        actividad:"",
-    })
-    function handleChange(e){
-        e.preventDefault()
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        })
-    }
     function handleChangeContinente(e){
         e.preventDefault()
         setContinente(e.target.value)
@@ -28,30 +18,28 @@ function Filtros({cambiarOrden, paginaSiguiente, orden, setContinente}){
 
     }
     return <div className="filtros">
-        <div className="filtroAlfabetico">
-            <button name="nombre" value="ASC"  onClick={handleChangeAlfabeto}>Ascendentemente</button>
-            <button name="nombre" value="DESC"  onClick={handleChangeAlfabeto}>Descendentemente</button>
-        </div>
-        <div className="filtroContinente">
-            <select className='select' name="continente"  onChange={handleChangeContinente}>
-                <option value="Todos">Todos</option>
-                <option value="Asia">Asia</option>
-                <option value="Africa">Africa</option>
-                <option value="Americas">America</option>
-                <option value="Polar">Antartida</option>
-                <option value="Oceania">Oceania</option>
-
-            </select>
-        </div>
-        {/* <div className="filtroActividades">
-        <select className='select' name="actividad" onChange={handleChange}> 
-                <option value="test1">test1</option>
-                <option value="test2">test2</option>
-                <option value="test3">test3</option>
-
-            </select>
-        </div> */}
-    </div>
+                <span>Ordenar por  </span>
+                <div className="filtroAlfabetico">
+                       <select className='select' name="continente"  onChange={handleChangeAlfabeto}>
+                        <option value="ASC">A-Z</option>
+                        <option value="DESC">Z-A</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">America</option>
+                        <option value="Polar">Antartida</option>
+                        <option value="Oceania">Oceania</option>
+                    </select>
+                </div>
+                <div className="filtroContinente">
+                    <select className='select' name="continente"  onChange={handleChangeContinente}>
+                        <option value="Todos">Todos</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">America</option>
+                        <option value="Polar">Antartida</option>
+                        <option value="Oceania">Oceania</option>
+                    </select>
+                </div>
+            </div>
 }
 
 //Para conocer que paises existen actualmente
