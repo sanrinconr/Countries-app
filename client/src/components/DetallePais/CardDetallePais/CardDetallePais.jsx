@@ -12,7 +12,7 @@ import "./CardDetallePais.scss"
 function CardDetallePais({Id, Nombre, Continente, Bandera, Capital, SubRegion, Area, Poblacion, actividades, getDetalle}){
     useEffect(()=>{
         getDetalle()
-    },[Id])
+    },[])
     if(actividades){
         return <div className="containerCardDetallePais">
         <div className="header">

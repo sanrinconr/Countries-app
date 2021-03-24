@@ -14,27 +14,39 @@ import fetchPaises from "../../../redux/actions/fetchPaises";
 import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
-function ContainerPaises(props){
+import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
+function ContainerPaises({fet, paises, filtroContinentes}){
     useEffect(()=>{
-        props.fet(props.paginaSiguiente)
+        //Como se ejecuta una sola vez pues se dejan valores fijos
+        fet(0, "ASC")
     },[])
 
-    if(Array.isArray(props.paises)){
+    if(Array.isArray(paises)){
         return <div>
         <div className="containerPaises">
-        {props.paises?.map(pais=>{
-            return  <CardPais
-            key={pais.Id} 
-            id={pais.Id} 
-            nombre={pais.Nombre} 
-            continente={pais.Continente} 
-            bandera={pais.Bandera}/>
+        {paises?.map(pais=>{
+            if(filtroContinentes !== "Todos"){
+                if(filtroContinentes === pais.Continente){
+                    return  <CardPais
+                    key={pais.Id} 
+                    id={pais.Id} 
+                    nombre={pais.Nombre} 
+                    continente={pais.Continente} 
+                    bandera={pais.Bandera}/>
+                    }
+            }else{
+                return  <CardPais
+                key={pais.Id} 
+                id={pais.Id} 
+                nombre={pais.Nombre} 
+                continente={pais.Continente} 
+                bandera={pais.Bandera}/>
             }
+            }
+            
         )}
         </div>
-        <div className="containerMasElementos">
-        <button className = "btn btnGray" onClick={()=>props.fet(props.paginaSiguiente)}>¡Mas paises!</button>
-        </div>
+        <ButtonMasPaises/>
     </div>
     }else{
         return <div>
@@ -44,13 +56,14 @@ function ContainerPaises(props){
     
 }
 
+//Para conocer que paises existen actualmente
 const mapStateToProps = (state)=>{
     return state.paisesReducer
 };
-
+//Para poder pedir los primeros 10 paises
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    fet: (paginaSiguiente) => {
-            dispatch(fetchPaises(paginaSiguiente))
+    fet: (paginaSiguiente, orden) => {
+            dispatch(fetchPaises(paginaSiguiente, orden))
     }
 })
 

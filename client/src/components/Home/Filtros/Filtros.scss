@@ -1,0 +1,30 @@
+.filtros{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 2% 7%;
+    font-size: 120%;
+
+    .filtroAlfabetico{
+        display: flex;
+        flex-flow: row nowrap;
+
+        margin:1%;
+    }
+    .filtroContinente{
+        display: flex;
+        flex-flow: column nowrap;
+
+        margin:1%;
+    }
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 2px 30px 2px 2px;
+        border: none;
+        background: #eee url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+        background-position: right 5px center;
+    }
+}
