@@ -2,99 +2,150 @@
 .formNuevaActividad{
     display: flex;
     justify-content: center;
-    margin: 10px;
+    margin-top: 10px;
+    font-size: 30px;
+
     form{
-        
         display: flex;
         flex-flow: column nowrap;
-        margin: 2% 20%;
         padding: 3%;
         border-style: none;
-        border-color: gray;
-        border-width: 1px;
         border-radius: 30px;
-        font-size: 30px;
         //Para que sirva en los 4 lados la sombra
         //https://stackoverflow.com/questions/5608222/how-to-apply-box-shadow-on-all-four-sides
         -webkit-box-shadow: -1px -1px 6px 1px rgba(0, 0, 0, 0.219);
             box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.219);
+        
         .title{
-            font-size: 130%;
+            font-size: 140%;
         }
-        .paneles{
-            display: flex;
-            flex: row nowrap;
-            .izquierda{
-                margin-left: 30px;
-                div{
-                    margin: 1.2em 0;
-                    margin-right: 10px;
-                }
-            }
-            .derecha{
-                div{
-                    margin: 1.2em 0;
-                    margin-left: 10px;
-                }
-            }
-        }
-         
-        .paises{
-            margin-left: 30px;
+        .containerData{
             display: flex;
             flex-flow: column nowrap;
-            span{
-                font-size: 110%; 
-                margin: 3% 0%
+            font-size: 100%;
+            margin-top: 5%;
+            .panel{
+                display: flex;
+                flex: row wrap;
+                .izquierda{
+                    display: flex;
+                    flex-flow: column wrap;
+                    justify-content: center;
+                    align-content: center;
+                    margin-right: 1.2em;
+                    label{
+                        font-size: 80%;
+                    }
+                    div{
+                       margin: 10px 0; 
+                    }
+                }
+                .derecha{
+                    display: flex;
+                    flex-flow: column wrap;
+                    justify-content: center;
+                    align-content: center;
+                    margin-left: 1.2em;
+                    label{
+                        font-size: 80%;
+                    }
+                    div{
+                        margin: 10px 0;
+                    }
+                }
             }
-            .nuevoPais{
-                margin: 5% 0%;
-                padding: 5px 5%;
-                font-size: 70%;
-                color: rgb(58, 58, 58);
-
-                background: none;
-                outline:none;
-                border-style:solid;
-                border-color: gray;
+             
+            .horizontalLine {
+                border-top: 1px solid rgba(131, 131, 131, 0.753);
+                width: 90%;
+                margin-top: 50px;
+              }
+            .paises{
+                display: flex;
+                flex-flow: column nowrap;
+                margin-top: 5%;
+                span{
+                    font-size: 110%; 
+                }
+                .nuevoPais{
+                    margin: 5% 0%;
+                    padding: 5px 5%;
+                    font-size: 70%;
+                    color: rgb(58, 58, 58);
+    
+                    background: none;
+                    outline:none;
+                    border-style:solid;
+                    border-color: gray;
+                    border-radius: 10px;
+                    transition-duration: 0.4s;
+    
+                }
+                .nuevoPais:hover{
+                    background-color: grey;
+                    color: white;
+                }
+                .nuevoPais:active{
+                    background-color: green;
+                }
+            }
+            //Input general para todos los textos
+            .input{
+                background-color: none;
+                border-style: solid;
                 border-radius: 10px;
+                border-width: 1px;
+                border-color: white;
+                font-size: 20px;
+                padding: 3% 3%;
+                outline: none;
                 transition-duration: 0.4s;
+                box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.219);
+            }
+            .input:hover{
+                border-color: grey;
+            }
+            .inputPais{
+                margin: 2% 0%;
+            }
 
-            }
-            .nuevoPais:hover{
+            //Cuando se esta haciendo la peticion
+            .desactivado{
                 background-color: grey;
+                border-style: solid;
+                border-radius: 10px;
+                border-width: 1px;
+                border-color: grey;
                 color: white;
+                padding: 3%;
+                font-size: 20px;
+                outline: none;
+                transition-duration: 0.4s;
             }
-            .nuevoPais:active{
-                background-color: green;
+            //Todos los selects
+            //https://codepen.io/mnpenner/pen/AIdwr
+            select {
+                font-size: 60%;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                padding: 2px 30px 2px 2px;
+                border: none;
+                background: #eee url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+                background-position: right 5px center;
+            }
+            .buttonSubmit{
+                background-color: #3f51b5;
+                color: white;
+                border-color:#3f51b5 ;
+                transition-duration: 0.4s;
+            }
+            .buttonSubmit:hover{
+                color: black;
+                background-color: white;
             }
         }
-        .input{
-            background-color: none;
-            border-style: solid;
-            border-radius: 10px;
-            border-width: 1px;
-            border-color: white;
-            padding: 3%;
-            font-size: 20px;
-            outline: none;
-            transition-duration: 0.4s;
-            box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.219);
-        }
-        .input:hover{
-            border-color: grey;
-        }
-        .desactivado{
-            background-color: grey;
-            border-style: solid;
-            border-radius: 10px;
-            border-width: 1px;
-            border-color: grey;
-            color: white;
-            padding: 3%;
-            font-size: 20px;
-            outline: none;
-            transition-duration: 0.4s;
-        }
+
+        
     }
 }

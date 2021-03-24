@@ -5,9 +5,9 @@ export default function FormNuevaActividad(){
     const [cantPais, setCantPais] = useState(1)
     const [paises, setPaises] = useState({0:{value:""}})
     const [inputActividad, setInputActividad] = useState({
-        nombre: "cala",
+        nombre: "",
         dificultad: "1",
-        duracion:"250",
+        duracion:"",
         temporada:"verano",
       })
       const [consultando, setConsultando] = useState(false)
@@ -58,67 +58,67 @@ export default function FormNuevaActividad(){
                 <div className="title">
                     <span>Nueva actividad</span>
                 </div>
-                <div className="paneles">
-                    <div className="izquierda">
-                        <div>
-                            <input type="text"
-                            className="input" 
-                            name="nombre" 
-                            placeholder="Nombre"
-                            value={inputActividad.nombre}
-                            onChange={handleChangeActividad}/>
+                <div className="containerData">
+                    <div className="panel">
+                        <div className="izquierda">
+                            <div>
+                                <input type="text"
+                                className="input" 
+                                name="nombre" 
+                                placeholder="Nombre"
+                                value={inputActividad.nombre}
+                                onChange={handleChangeActividad}/>
+                                </div>
+                            <div>
+                                <input type="text"
+                                className="input"
+                                name="duracion"
+                                placeholder="Duracion (dias)"
+                                value={inputActividad.duracion}
+                                onChange={handleChangeActividad}/>
+                            </div>
                         </div>
+                        <div className="derecha">
                         <div>
-                            <label> Temporada: </label>
-                            <select name="temporada" onChange={handleChangeActividad} value={inputActividad.temporada}>
-                                <option value="verano">Verano</option>
-                                <option value="otoño">Otoño</option>
-                                <option value="invierno">Invierno</option>
-                                <option value="primavera">Primavera</option>
-                            </select>
+                            <label> Dificultad:  </label>
+                                <select className='select' name="dificultad" onChange={handleChangeActividad} value={inputActividad.dificultad}>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label> Temporada:   </label>
+                                <select className='select' name="temporada" onChange={handleChangeActividad} value={inputActividad.temporada}>
+                                    <option value="verano">Verano</option>
+                                    <option value="otoño">Otoño</option>
+                                    <option value="invierno">Invierno</option>
+                                    <option value="primavera">Primavera</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div className="derecha">
-                        <div>
-                        <label> Dificultad: </label>
-                            <select name="dificultad" onChange={handleChangeActividad} value={inputActividad.dificultad}>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div>
-                            <input type="text"
-                            className="input"
-                            name="duracion"
-                            placeholder="Duracion (dias)"
-                            value={inputActividad.duracion}
-                            onChange={handleChangeActividad}/>
-                        </div>
+                    <hr className="horizontalLine"/>
+                    <div className="paises">
+                        <span>Paises</span>
+                        {Object.keys(paises).map(claveId=>{
+                            return <div key={claveId} >
+                                <input type="text"
+                                id={claveId}
+                                key={claveId}
+                                className="input inputPais"
+                                name="pais"
+                                placeholder="Pais"
+                                value={paises[claveId].value}
+                                onChange={handleChangePais}/>
+                            </div>
+                        })}
+                        <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
                     </div>
+                    <input className={consultando?"desactivado":"input buttonSubmit"} onClick={guardarActividad} type="submit" value="Crear actividad!"/>
                 </div>
-                <div className="paises">
-                    <span>Paises</span>
-                    {Object.keys(paises).map(claveId=>{
-                        return <div key={claveId} >
-                             <input type="text"
-                             id={claveId}
-                             key={claveId}
-                             className="input"
-                             name="pais"
-                             placeholder="Pais"
-                             value={paises[claveId].value}
-                             onChange={handleChangePais}/>
-                         </div>
-                    })}
-                    <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
-                </div>
-                <div>
-                    <input className={consultando?"desactivado":"input"} onClick={guardarActividad} type="submit" value="Crear actividad!"/>
-                </div>
-
           </form>
           </div>
       )
