@@ -14,6 +14,7 @@ import fetchPaises from "../../../redux/actions/fetchPaises";
 import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
+import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
 function ContainerPaises(props){
     useEffect(()=>{
         props.fet(props.paginaSiguiente)
@@ -32,9 +33,7 @@ function ContainerPaises(props){
             }
         )}
         </div>
-        <div className="containerMasElementos">
-        <button className = "btn btnGray" onClick={()=>props.fet(props.paginaSiguiente)}>¡Mas paises!</button>
-        </div>
+        <ButtonMasPaises fet={props.fet} paginaSiguiente={props.paginaSiguiente}/>
     </div>
     }else{
         return <div>
