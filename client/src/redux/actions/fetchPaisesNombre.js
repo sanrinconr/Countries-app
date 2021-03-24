@@ -36,7 +36,6 @@ export default function fetchPaisesNombre(nombre, paginaSiguiente){
         dispatch(_fetchPaisesNombreRequest(paginaSiguiente === 0 ? true : false))
         axios.get(process.env.REACT_APP_URL_API+"countries",{params:{name:nombre}})
         .then(res=>{
-            console.log(res.data)
             dispatch(_fetchPaisesNombreSuccess(res.data))
         })
         .catch(err=>{

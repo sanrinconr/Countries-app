@@ -32,7 +32,6 @@ export default function fetchPaises(paginaSiguiente, orden){
         dispatch(_fetchPaisesRequest())
         axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente, orden}})
         .then(res=>{
-            console.log(res.data)
             dispatch(_fetchPaisesSuccess(res.data, orden))
         })
         .catch(err=>{

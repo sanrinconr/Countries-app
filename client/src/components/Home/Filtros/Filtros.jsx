@@ -14,7 +14,6 @@ function Filtros({cambiarOrden, paginaSiguiente, orden}){
             ...input,
             [e.target.name]: e.target.value
         })
-        console.log(input)
     }
     function handleChangeAlfabeto(e){
         if(orden !== e.target.value){
