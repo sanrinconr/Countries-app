@@ -2,8 +2,9 @@ import { useState } from "react"
 import {connect} from "react-redux"
 
 import fetchPaises from "../../../redux/actions/fetchPaises"
+import changeFiltroContinentes from "../../../redux/actions/filtroContinentes"
 
-function Filtros({cambiarOrden, paginaSiguiente, orden}){
+function Filtros({cambiarOrden, paginaSiguiente, orden, setContinente}){
     const [input , setInput] = useState({
         continente:"",
         actividad:"",
@@ -14,6 +15,10 @@ function Filtros({cambiarOrden, paginaSiguiente, orden}){
             ...input,
             [e.target.name]: e.target.value
         })
+    }
+    function handleChangeContinente(e){
+        e.preventDefault()
+        setContinente(e.target.value)
     }
     function handleChangeAlfabeto(e){
         if(orden !== e.target.value){
@@ -28,7 +33,8 @@ function Filtros({cambiarOrden, paginaSiguiente, orden}){
             <button name="nombre" value="DESC"  onClick={handleChangeAlfabeto}>Descendentemente</button>
         </div>
         <div className="filtroContinente">
-            <select className='select' name="continente"  onChange={handleChange}>
+            <select className='select' name="continente"  onChange={handleChangeContinente}>
+                <option value="Todos">Todos</option>
                 <option value="Asia">Asia</option>
                 <option value="Africa">Africa</option>
                 <option value="Americas">America</option>
@@ -56,6 +62,9 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch, ownProps) => ({
     cambiarOrden: (paginaSiguiente, orden) => {
             dispatch(fetchPaises(paginaSiguiente, orden))
+    },
+    setContinente:(continente)=>{
+        dispatch(changeFiltroContinentes(continente))
     }
 })
 

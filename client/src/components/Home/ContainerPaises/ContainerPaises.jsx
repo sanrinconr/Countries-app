@@ -15,7 +15,7 @@ import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
 import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
-function ContainerPaises({fet, paises}){
+function ContainerPaises({fet, paises, filtroContinentes}){
     useEffect(()=>{
         //Como se ejecuta una sola vez pues se dejan valores fijos
         fet(0, "ASC")
@@ -25,13 +25,25 @@ function ContainerPaises({fet, paises}){
         return <div>
         <div className="containerPaises">
         {paises?.map(pais=>{
-            return  <CardPais
-            key={pais.Id} 
-            id={pais.Id} 
-            nombre={pais.Nombre} 
-            continente={pais.Continente} 
-            bandera={pais.Bandera}/>
+            if(filtroContinentes !== "Todos"){
+                if(filtroContinentes === pais.Continente){
+                    return  <CardPais
+                    key={pais.Id} 
+                    id={pais.Id} 
+                    nombre={pais.Nombre} 
+                    continente={pais.Continente} 
+                    bandera={pais.Bandera}/>
+                    }
+            }else{
+                return  <CardPais
+                key={pais.Id} 
+                id={pais.Id} 
+                nombre={pais.Nombre} 
+                continente={pais.Continente} 
+                bandera={pais.Bandera}/>
             }
+            }
+            
         )}
         </div>
         <ButtonMasPaises/>
