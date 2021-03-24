@@ -6,9 +6,11 @@
 import SearchBar from "./SearchBar/SearchBar";
 import ContainerPaises from "./ContainerPaises/ContainerPaises";
 import "./Home.scss"
+import Filtros from "./Filtros/Filtros";
 export default function Home(){
     return <div className="home">
         <SearchBar/>
+        <Filtros/>
         <ContainerPaises/>
     </div>
 }
