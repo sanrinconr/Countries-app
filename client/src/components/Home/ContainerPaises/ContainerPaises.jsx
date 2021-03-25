@@ -9,20 +9,11 @@
  * instagram
  */
 import {connect} from "react-redux"
-import { useEffect } from "react"
-import fetchPaises from "../../../redux/actions/fetchPaises";
 import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
 import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
-function ContainerPaises({fet, paises, filtroContinentes}){
-    useEffect(()=>{
-        //Como se ejecuta una sola vez pues se dejan valores fijos
-        if(paises.length === 0){
-            fet(0, "ASC")
-        }
-    },[])
-
+function ContainerPaises({paises, filtrosActuales}){
     function filtrarContinente(paises, continente){
         return paises.map(pais=>{
             if(continente === "Todos" || continente === pais.Continente){
@@ -35,23 +26,10 @@ function ContainerPaises({fet, paises, filtroContinentes}){
                     }
             })
     }
-    function filtrarActividad(paises,actividad){
-        return paises.map(pais=>{
-            if(actividad === "Todas" || pais.Actividades.include(actividad)){
-                return  <CardPais
-                    key={pais.Id} 
-                    id={pais.Id} 
-                    nombre={pais.Nombre} 
-                    continente={pais.Continente} 
-                    bandera={pais.Bandera}/>
-                    }
-            })
-    }
     if(Array.isArray(paises)){
-        console.log(paises)
         return <div>
         <div className="containerPaises">
-        {filtrarContinente(paises, filtroContinentes)}
+        {filtrarContinente(paises, filtrosActuales.continente)}
         </div>
         <ButtonMasPaises/>
     </div>
@@ -67,15 +45,7 @@ function ContainerPaises({fet, paises, filtroContinentes}){
 const mapStateToProps = (state)=>{
     return state.paisesReducer
 };
-//Para poder pedir los primeros 10 paises
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    fet: (paginaSiguiente, orden) => {
-            dispatch(fetchPaises(paginaSiguiente, orden))
-    }
-})
-
 
 export default connect(
 mapStateToProps,
-mapDispatchToProps
 )(ContainerPaises)

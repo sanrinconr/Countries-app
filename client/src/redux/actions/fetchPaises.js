@@ -13,10 +13,10 @@ function _fetchPaisesRequest(){
         type:FETCH_PAISES_REQUEST,
     }
 }
-function _fetchPaisesSuccess(paises, orden){
+function _fetchPaisesSuccess(paises){
     return {
         type:FETCH_PAISES_SUCCESS,
-        payload:{paises, orden}
+        payload:paises
     }
 }
 function _fetchPaisesError(err){
@@ -26,17 +26,23 @@ function _fetchPaisesError(err){
     }
 }
 
-export default function fetchPaises(paginaSiguiente, orden, actividad){
+export default function fetchPaises(){
     //El dispach se recibe gracias a thunk
-    return (dispatch) =>{
+    return (dispatch, getState) =>{
         dispatch(_fetchPaisesRequest())
-        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente, orden, actividad}})
-        .then(res=>{dispatch(_fetchPaisesSuccess(
+        axios.get(process.env.REACT_APP_URL_API+"countries",{
+            params:{
+                page:getState().paisesReducer.paginaSiguiente, 
+                orden:getState().paisesReducer.filtrosActuales.orden, 
+                actividad:getState().paisesReducer.filtrosActuales.actividad}
+            })
+        .then(res=>{
+            dispatch(_fetchPaisesSuccess(
             //Como las actividades vienen en Nombre:"Actividad" se deja solo como un arreglo de strings
             res.data.map(pais=>{
                 return {...pais, Actividades:pais.Actividades.map(act=>act.Nombre)}
-            }), 
-            orden))
+            })
+            ))
         })
         .catch(err=>{
             dispatch(_fetchPaisesError(err))
