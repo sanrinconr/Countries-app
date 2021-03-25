@@ -6,6 +6,7 @@ import { useState } from "react"
 import {connect} from "react-redux"
 import fetchPaises from "../../../redux/actions/fetchPaises";
 import fetchPaisesNombre from "../../../redux/actions/fetchPaisesNombre";
+import { changeFiltroNombre } from "../../../redux/actions/filtros";
 import { cleanPaises } from "../../../redux/actions/limpiar";
 import "./SearchBar.scss"
 
@@ -26,7 +27,9 @@ function SearchBar({obtenerPaisesPorNombre, cargarPaisesCero}){
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
         obtenerPaisesPorNombre: (nombre) => {
-                dispatch(fetchPaisesNombre(nombre,0))
+                dispatch(changeFiltroNombre(nombre))
+                dispatch(cleanPaises())
+                dispatch(fetchPaises())
         },
         cargarPaisesCero:()=>{
             dispatch(cleanPaises())

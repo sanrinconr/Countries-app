@@ -34,7 +34,8 @@ export default function fetchPaises(){
             params:{
                 page:getState().paisesReducer.paginaSiguiente, 
                 orden:getState().paisesReducer.filtrosActuales.orden, 
-                actividad:getState().paisesReducer.filtrosActuales.actividad}
+                actividad:getState().paisesReducer.filtrosActuales.actividad,
+                nombre:getState().paisesReducer.filtrosActuales.nombre}
             })
         .then(res=>{
             dispatch(_fetchPaisesSuccess(

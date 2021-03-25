@@ -2,6 +2,8 @@ const axios = require("axios");
 const {models} = require('../../sequelize/db');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+
+
 function cargarDatosDB() {
 	return _tienePaisesCargados()
 	.then(cant=>{
@@ -52,7 +54,6 @@ function _cargarDesdeApi(){
 						}
 					})
 				}))
-                //Si todo fue correcto y se agrego, entonces se retorna data
                 .then(()=>{
                     return true
                 })
@@ -61,7 +62,13 @@ function _cargarDesdeApi(){
                 })
 		})
 }
-function getPaises(pagina, orden, actividad){	
+/**
+ * Obtencion de los paises deacuerdo a los filtros que se envien
+ * Pagina es el numero del paginado, 0,1,2,3,4,5
+ * Actividad si se debe filtrar por alguna actividad, si llega null no se tendra en cuenta
+ * Nombre si se debe filtrar por algun nombre, se llega null no se tendran en cuenta
+ */
+function getPaises(pagina, orden, actividad, nombre){	
 	let paginado = pagina*10
 	//https://sequelize.org/master/manual/eager-loading.html
 	//https://sequelize.org/master/manual/naming-strategies.html
@@ -69,6 +76,9 @@ function getPaises(pagina, orden, actividad){
 		attributes:["Id","Nombre","Continente","Bandera"],
 		offset:paginado,
 		limit:10,
+		where:nombre? {
+			Nombre:{[Sequelize.Op.iLike]: `%${nombre}%`}
+		} : "",
 		include: { 
 			association: 'Actividades' , 
 			//Atributos tabla de rompimiento
@@ -87,99 +97,6 @@ function getPaises(pagina, orden, actividad){
 	})
 }
 
-function buscarPaises(nombre){
-	let salida = []
-	return buscarPaisesLocal(nombre)
-	.then(res=>{
-		if(res){
-			salida = [...salida, ...res]
-		}
-		// return buscarPaisesRemoto(nombre)
-		return salida
-	})
-	// .then(paisesRemotos=>{
-	// 	salida = [...salida, ...paisesRemotos]
-	// 	//Eliminar duplicados
-	// 	//https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects?noredirect=1
-	// 	salida = salida.filter((v,i,a)=>a.findIndex(t=>(t.Id === v.Id))===i)
-	// 	//V es el elemento, i es el index del elemento actual, a es el arreglo original
-	// 	return salida
-	// })
-	.catch(err=>{
-		return {error:"Error al buscar pais por nombre",details:err}
-	})
-
-	function buscarPaisesLocal(nombre){
-		return models.Pais.findAll({
-			attributes:["Id","Nombre","Continente","Bandera"],
-			where:{
-				Nombre:{[Sequelize.Op.iLike]: `%${nombre}%`}
-			}
-		})
-		.then(res=>{
-			if(res.length === 0){
-				return null
-			}else{
-				return res.map(pais=>pais.dataValues)
-			}
-		})
-	}
-	function buscarPaisesRemoto(nombre){
-		return axios.get("https://restcountries.eu/rest/v2/name/"+nombre)
-		.then(res=>res.data)
-		.then(res=>{
-			return res.map(pais=>{
-				return {
-					id:pais.alpha3Code,
-					nombre:pais.name,
-					continente:pais.region,
-					bandera:pais.flag,
-					capital:pais.capital
-				}
-			})
-		})
-		.then(paisesBasicos=>{
-			return _agregarPaisesBasico(paisesBasicos)
-		})
-	}
-    
-}
-
-/**
- * Se agrega un nuevo pais en su version basica
- */
-function _agregarPaisesBasico(paises){
-		return Promise.all(paises.map(pais=>{
-			return models.Pais.findOrCreate({
-				where:{
-					Id: pais.id,
-					
-				},
-				default:{
-					Id: pais.id,
-					Nombre: pais.nombre,
-					Continente: pais.continente,
-					Bandera: pais.bandera,
-				}
-			})
-		}))
-		
-		//Si todo fue correcto y se agrego, entonces se retorna data
-		.then(res=>{
-			//Como queda envuelto en un arreglo cada pais (por el promise) y ademas en otro por el find toca reorganizar
-			return res.map(el=>el[0].dataValues)
-		})
-		.then((res)=>{
-			return res.map(pais=>{
-				return {
-					Id:pais.Id, 
-					Nombre:pais.Nombre, 
-					Continente:pais.Continente, 
-					Bandera:pais.Bandera, 
-					}
-			})
-		})
-}
 function buscarPorId(idPais){
 	return buscarPorIdLocal(idPais)
 	.then(paisDetallado=>{
@@ -307,4 +224,4 @@ function getActividadesPais(idPais){
 	})
 }
 
-module.exports = {cargarDatosDB,getPaises, buscarPaises, buscarPorId, getActividadesPais}
+module.exports = {cargarDatosDB,getPaises, buscarPorId, getActividadesPais}
