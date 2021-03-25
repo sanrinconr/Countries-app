@@ -61,7 +61,7 @@ function _cargarDesdeApi(){
                 })
 		})
 }
-function getPaises(pagina, orden, actividad){	
+function getPaises(pagina, orden, actividad, nombre){	
 	let paginado = pagina*10
 	//https://sequelize.org/master/manual/eager-loading.html
 	//https://sequelize.org/master/manual/naming-strategies.html
@@ -69,6 +69,9 @@ function getPaises(pagina, orden, actividad){
 		attributes:["Id","Nombre","Continente","Bandera"],
 		offset:paginado,
 		limit:10,
+		where:nombre? {
+			Nombre:{[Sequelize.Op.iLike]: `%${nombre}%`}
+		} : "",
 		include: { 
 			association: 'Actividades' , 
 			//Atributos tabla de rompimiento
