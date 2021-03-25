@@ -69,7 +69,15 @@ function getPaises(pagina, orden){
 		attributes:["Id","Nombre","Continente","Bandera"],
 		offset:paginado,
 		limit:10,
-		include: { association: 'Actividades' } ,
+		include: { 
+			association: 'Actividades' , 
+			//Atributos tabla de rompimiento
+			through: {
+				attributes: []
+			},
+			//Atributos tabla actividad
+			attributes:["Nombre"]
+		},
 		order: orden ==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
 	})
 	.then(res=>res.map(pais=>pais.dataValues))
