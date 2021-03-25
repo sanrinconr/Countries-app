@@ -60,7 +60,7 @@ function Filtros(props){
                     </select>
                 </div>
                 <div className="filtroContinente">
-                    <select value= {continentes} className='select' name="continente"  onChange={handleChangeContinente}>
+                    <select value= {props.filtrosActuales.continente} className='select' name="continente"  onChange={handleChangeContinente}>
                         <option value="Todos">Todos</option>
                         <option value="Asia">Asia</option>
                         <option value="Africa">Africa</option>
