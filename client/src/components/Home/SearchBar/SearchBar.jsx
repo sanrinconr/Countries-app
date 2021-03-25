@@ -21,7 +21,7 @@ function SearchBar({obtenerPaisesPorNombre, cargarPaisesCero}){
     return <div className="searchBar">
         <input type="text" value={input} onChange={handleChange}/>
         <input type="button" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
-        <input type="button" value="Ver todos" onClick={()=>cargarPaisesCero()}/>
+        <input type="button" value="Ver todos" onClick={()=>{setInput("");cargarPaisesCero()}}/>
     </div>
 }
 
@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 dispatch(fetchPaises())
         },
         cargarPaisesCero:()=>{
+            dispatch(changeFiltroNombre(null))
             dispatch(cleanPaises())
             dispatch(fetchPaises())
         }
