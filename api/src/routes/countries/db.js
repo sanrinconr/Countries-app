@@ -61,7 +61,7 @@ function _cargarDesdeApi(){
                 })
 		})
 }
-function getPaises(pagina, orden){	
+function getPaises(pagina, orden, actividad){	
 	let paginado = pagina*10
 	//https://sequelize.org/master/manual/eager-loading.html
 	//https://sequelize.org/master/manual/naming-strategies.html
@@ -76,7 +76,8 @@ function getPaises(pagina, orden){
 				attributes: []
 			},
 			//Atributos tabla actividad
-			attributes:["Nombre"]
+			attributes:["Nombre"],
+			where:actividad? {Nombre:actividad}:{}
 		},
 		order: orden ==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
 	})

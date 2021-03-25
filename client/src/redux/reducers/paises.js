@@ -7,7 +7,8 @@ const default_paises_reducer={
     paginaSiguiente:0,
     consultando:false,
     orden:"ASC",
-    filtroContinentes:"Todos"
+    filtroContinentes:"Todos",
+    filtroActividad:"Todas"
 }
 
 export default function paisesReducer(status = default_paises_reducer, action){

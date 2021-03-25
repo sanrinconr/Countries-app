@@ -6,8 +6,21 @@ import {changeFiltroContinentes, changeFiltroActividad} from "../../../redux/act
 
 import axios from "axios"
 import "./Filtros.scss"
-function Filtros({cambiarOrden, orden, filtroContinentes, setContinente, filtroActividades, setActividad}){
+function Filtros(props){
+    //Relativo a el orden
+    const orden = props.orden
+    const cambiarOrden = props.cambiarOrden
+
+    //Relativo a los continentes
+    const continentes = props.filtroContinentes
+    const setContinente = props.setContinente
+
+    //Relativo actividades, los filtros del componente
     const [actividades, setActividades] = useState([])
+
+    //Actividad actual, desde redux
+    const actividad =  props.filtroActividad
+    const cambiarActividad = props.cambiarActividad
     useEffect(()=>{
         axios.get(process.env.REACT_APP_URL_API+"activity")
         .then(res=>res.data)
@@ -19,14 +32,15 @@ function Filtros({cambiarOrden, orden, filtroContinentes, setContinente, filtroA
     }
     function handleChangeAlfabeto(e){
         if(orden !== e.target.value){
-            cambiarOrden(0, e.target.value)
+            cambiarOrden(e.target.value, actividad)
         }
         e.preventDefault()
 
     }
     function handleChangeActividad(e){
         e.preventDefault()
-        setActividad(e.target.value)
+        
+        cambiarActividad(orden, e.target.value)
     }
     return <div className="filtros">
                 <span>Ordenar por  </span>
@@ -41,7 +55,7 @@ function Filtros({cambiarOrden, orden, filtroContinentes, setContinente, filtroA
                     </select>
                 </div>
                 <div className="filtroContinente">
-                    <select value= {filtroContinentes} className='select' name="continente"  onChange={handleChangeContinente}>
+                    <select value= {continentes} className='select' name="continente"  onChange={handleChangeContinente}>
                         <option value="Todos">Todos</option>
                         <option value="Asia">Asia</option>
                         <option value="Africa">Africa</option>
@@ -51,7 +65,7 @@ function Filtros({cambiarOrden, orden, filtroContinentes, setContinente, filtroA
                     </select>
                 </div>
                 <div className="filtroActividades">
-                    <select value= {filtroActividades} className='select' name="actividades"  onChange={handleChangeActividad}>
+                    <select className='select' name="actividades"  onChange={handleChangeActividad}>
                         {actividades.map(act=><option value={act}>{act}</option>)}
                     </select>
                 </div>
@@ -64,14 +78,24 @@ const mapStateToProps = (state)=>{
 };
 //Para poder pedir los primeros 10 paises
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    cambiarOrden: (paginaSiguiente, orden) => {
-            dispatch(fetchPaises(paginaSiguiente, orden))
+    /**
+     * Se pide al back la pagina 0 de 15 paises dependiendo el orden
+     * (se borra todos los paises actuales que se tengan)
+     */
+    cambiarOrden: (orden, actividad) => {
+            dispatch(fetchPaises(0, orden, actividad))
     },
+    /**
+     * Se actualiza en redux el filtro actual de continentes
+     */
     setContinente:(continente)=>{
         dispatch(changeFiltroContinentes(continente))
     },
-    setActividad:(actividad)=>{
-        dispatch(changeFiltroActividad(actividad))
+    /**
+     * Se cambian los paises mostrados, se filtran por actividad
+     */
+    cambiarActividad:(orden,actividad)=>{
+        dispatch(fetchPaises(0,orden,actividad))
     }
 })
 

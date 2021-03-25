@@ -26,11 +26,11 @@ function _fetchPaisesError(err){
     }
 }
 
-export default function fetchPaises(paginaSiguiente, orden){
+export default function fetchPaises(paginaSiguiente, orden, actividad){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         dispatch(_fetchPaisesRequest())
-        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente, orden}})
+        axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente, orden, actividad}})
         .then(res=>{dispatch(_fetchPaisesSuccess(
             //Como las actividades vienen en Nombre:"Actividad" se deja solo como un arreglo de strings
             res.data.map(pais=>{

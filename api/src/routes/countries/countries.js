@@ -10,7 +10,7 @@ router.get("/", function (req, res) {
           res.send(response)
         })
       }else if(req.query.hasOwnProperty("page")){
-        getPaises(req.query.page, req.query.orden)
+        getPaises(req.query.page, req.query.orden, req.query.actividad)
         .then(resp=>{
           res.send(resp)
         })
