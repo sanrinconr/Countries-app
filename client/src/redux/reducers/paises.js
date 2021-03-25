@@ -1,6 +1,7 @@
 import {FETCH_PAISES_REQUEST, FETCH_PAISES_SUCCESS, FETCH_PAISES_ERROR} from "../actions/fetchPaises"
 import { FETCH_PAISES_NOMBRE_ERROR, FETCH_PAISES_NOMBRE_REQUEST, FETCH_PAISES_NOMBRE_SUCCESS } from "../actions/fetchPaisesNombre"
 import { CHANGE_FILTRO_ACTIVIDAD, CHANGE_FILTRO_CONTINENTE, CHANGE_FILTRO_ORDEN } from "../actions/filtros"
+import { CLEAN_PAISES } from "../actions/limpiar"
 
 const default_paises_reducer={
     paises:[],
@@ -76,6 +77,12 @@ export default function paisesReducer(status = default_paises_reducer, action){
                 }
             }
             return status
+        case CLEAN_PAISES:
+            return{
+                ...status,
+                paises:[],
+                paginaSiguiente:0,
+            }
         default:
             return status
     }
