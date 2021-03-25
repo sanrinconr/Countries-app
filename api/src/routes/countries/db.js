@@ -63,10 +63,13 @@ function _cargarDesdeApi(){
 }
 function getPaises(pagina, orden){	
 	let paginado = pagina*10
+	//https://sequelize.org/master/manual/eager-loading.html
+	//https://sequelize.org/master/manual/naming-strategies.html
 	return models.Pais.findAll({
 		attributes:["Id","Nombre","Continente","Bandera"],
 		offset:paginado,
 		limit:10,
+		include: { association: 'Actividades' } ,
 		order: orden ==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
 	})
 	.then(res=>res.map(pais=>pais.dataValues))
