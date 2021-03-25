@@ -1,6 +1,6 @@
 import {FETCH_PAISES_REQUEST, FETCH_PAISES_SUCCESS, FETCH_PAISES_ERROR} from "../actions/fetchPaises"
 import { FETCH_PAISES_NOMBRE_ERROR, FETCH_PAISES_NOMBRE_REQUEST, FETCH_PAISES_NOMBRE_SUCCESS } from "../actions/fetchPaisesNombre"
-import { CHANGE_FILTRO_CONTINENTE } from "../actions/filtroContinentes"
+import { CHANGE_FILTRO_CONTINENTE } from "../actions/filtros"
 
 const default_paises_reducer={
     paises:[],

@@ -23,30 +23,35 @@ function ContainerPaises({fet, paises, filtroContinentes}){
         }
     },[])
 
-    if(Array.isArray(paises)){
-        return <div>
-        <div className="containerPaises">
-        {paises?.map(pais=>{
-            if(filtroContinentes !== "Todos"){
-                if(filtroContinentes === pais.Continente){
-                    return  <CardPais
+    function filtrarContinente(paises, continente){
+        return paises.map(pais=>{
+            if(continente === "Todos" || continente === pais.Continente){
+                return  <CardPais
                     key={pais.Id} 
                     id={pais.Id} 
                     nombre={pais.Nombre} 
                     continente={pais.Continente} 
                     bandera={pais.Bandera}/>
                     }
-            }else{
+            })
+    }
+    function filtrarActividad(paises,actividad){
+        return paises.map(pais=>{
+            if(actividad === "Todas" || pais.Actividades.include(actividad)){
                 return  <CardPais
-                key={pais.Id} 
-                id={pais.Id} 
-                nombre={pais.Nombre} 
-                continente={pais.Continente} 
-                bandera={pais.Bandera}/>
-            }
-            }
-            
-        )}
+                    key={pais.Id} 
+                    id={pais.Id} 
+                    nombre={pais.Nombre} 
+                    continente={pais.Continente} 
+                    bandera={pais.Bandera}/>
+                    }
+            })
+    }
+    if(Array.isArray(paises)){
+        console.log(paises)
+        return <div>
+        <div className="containerPaises">
+        {filtrarContinente(paises, filtroContinentes)}
         </div>
         <ButtonMasPaises/>
     </div>

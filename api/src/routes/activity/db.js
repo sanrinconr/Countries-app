@@ -75,5 +75,16 @@ function _obtenerPaises(paises){
         })
     
 }
-
-module.exports = {crearActividad}
+function obtenerActividades(){
+	return models.Actividad.findAll({
+        attributes:["Nombre"]
+    })
+	.then(res=>{
+        console.log(res)
+        return res.map(act=>act.Nombre)
+    })
+	.catch(err=>{
+		return {error:"Ocurrio un error obteniendo actividades", details:err}
+	})
+}
+module.exports = {crearActividad,obtenerActividades}

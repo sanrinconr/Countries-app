@@ -2,10 +2,17 @@ import { useEffect, useState } from "react"
 import {connect} from "react-redux"
 
 import fetchPaises from "../../../redux/actions/fetchPaises"
-import changeFiltroContinentes from "../../../redux/actions/filtroContinentes"
+import {changeFiltroContinentes, changeFiltroActividad} from "../../../redux/actions/filtros"
 
+import axios from "axios"
 import "./Filtros.scss"
-function Filtros({cambiarOrden, paginaSiguiente, orden, filtroContinentes, setContinente}){
+function Filtros({cambiarOrden, orden, filtroContinentes, setContinente, filtroActividades, setActividad}){
+    const [actividades, setActividades] = useState([])
+    useEffect(()=>{
+        axios.get(process.env.REACT_APP_URL_API+"activity")
+        .then(res=>res.data)
+        .then(res=>setActividades(["Todas",...res]))
+    },[])
     function handleChangeContinente(e){
         e.preventDefault()
         setContinente(e.target.value)
@@ -16,6 +23,10 @@ function Filtros({cambiarOrden, paginaSiguiente, orden, filtroContinentes, setCo
         }
         e.preventDefault()
 
+    }
+    function handleChangeActividad(e){
+        e.preventDefault()
+        setActividad(e.target.value)
     }
     return <div className="filtros">
                 <span>Ordenar por  </span>
@@ -39,6 +50,11 @@ function Filtros({cambiarOrden, paginaSiguiente, orden, filtroContinentes, setCo
                         <option value="Oceania">Oceania</option>
                     </select>
                 </div>
+                <div className="filtroActividades">
+                    <select value= {filtroActividades} className='select' name="actividades"  onChange={handleChangeActividad}>
+                        {actividades.map(act=><option value={act}>{act}</option>)}
+                    </select>
+                </div>
             </div>
 }
 
@@ -53,6 +69,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setContinente:(continente)=>{
         dispatch(changeFiltroContinentes(continente))
+    },
+    setActividad:(actividad)=>{
+        dispatch(changeFiltroActividad(actividad))
     }
 })
 

@@ -31,8 +31,12 @@ export default function fetchPaises(paginaSiguiente, orden){
     return (dispatch) =>{
         dispatch(_fetchPaisesRequest())
         axios.get(process.env.REACT_APP_URL_API+"countries",{params:{page:paginaSiguiente, orden}})
-        .then(res=>{
-            dispatch(_fetchPaisesSuccess(res.data, orden))
+        .then(res=>{dispatch(_fetchPaisesSuccess(
+            //Como las actividades vienen en Nombre:"Actividad" se deja solo como un arreglo de strings
+            res.data.map(pais=>{
+                return {...pais, Actividades:pais.Actividades.map(act=>act.Nombre)}
+            }), 
+            orden))
         })
         .catch(err=>{
             dispatch(_fetchPaisesError(err))

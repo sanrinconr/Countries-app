@@ -18,6 +18,12 @@
 
         margin:1%;
     }
+    .filtroActividades{
+        display: flex;
+        flex-flow: column nowrap;
+
+        margin:1%; 
+    }
     select {
         -webkit-appearance: none;
         -moz-appearance: none;
