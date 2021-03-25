@@ -77,9 +77,9 @@ function getPaises(pagina, orden, actividad){
 			},
 			//Atributos tabla actividad
 			attributes:["Nombre"],
-			where:actividad? {Nombre:actividad}:{}
+			where:actividad? {Nombre:actividad}:""
 		},
-		order: orden ==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
+		order: orden==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
 	})
 	.then(res=>res.map(pais=>pais.dataValues))
 	.catch(err=>{
@@ -288,7 +288,7 @@ function getActividadesPais(idPais){
 	.then(pais=>{
 		//La s es por que sequelize espera un nombre el plural, pero como eso esta desactivado en
 		//el modelo por motivos esteticos se le mete a la mala
-		return pais.getActividads()
+		return pais.getActividades()
 	})
 	.then(actividades=>{
 		let data = actividades.map(acti=>{
