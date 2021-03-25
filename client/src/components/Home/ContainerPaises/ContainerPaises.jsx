@@ -13,31 +13,47 @@ import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
 import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
-function ContainerPaises({paises, filtrosActuales}){
+function ContainerPaises({paises, filtrosActuales, consultando}){
     function filtrarContinente(paises, continente){
-        return paises.map(pais=>{
+        let salida = []
+        for(let pais of paises){
+            console.log(pais)
             if(continente === "Todos" || continente === pais.Continente){
-                return  <CardPais
+                salida.push(<CardPais
                     key={pais.Id} 
                     id={pais.Id} 
                     nombre={pais.Nombre} 
                     continente={pais.Continente} 
-                    bandera={pais.Bandera}/>
-                    }
-            })
+                    bandera={pais.Bandera}/>)
+            }
+        }
+
+        if(salida.length === 0){
+            return <div>
+                Oh!, no se encontraron paises, cambia de filtro o intenta una nueva consulta
+            </div>
+        }else{
+            return salida
+        }
     }
-    if(Array.isArray(paises)){
-        return <div>
-        <div className="containerPaises">
-        {filtrarContinente(paises, filtrosActuales.continente)}
-        </div>
-        <ButtonMasPaises/>
-    </div>
+    console.log(paises)
+    if(consultando){
+        return "Cargando..."
     }else{
-        return <div>
-            Error
+        if(paises.length !== 0){
+            return <div>
+            <div className="containerPaises">
+            {filtrarContinente(paises, filtrosActuales.continente)}
+            </div>
+            <ButtonMasPaises/>
         </div>
+        }else if(paises.length === 0){
+            return <div>
+                Oh!, no se encontraron paises, cambia de filtro o intenta una nueva consulta
+            </div>
+        }
     }
+    
     
 }
 
