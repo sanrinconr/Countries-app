@@ -61,13 +61,25 @@ function _cargarDesdeApi(){
                 })
 		})
 }
-function getPaises(pagina, orden){	
+function getPaises(pagina, orden, actividad){	
 	let paginado = pagina*10
+	//https://sequelize.org/master/manual/eager-loading.html
+	//https://sequelize.org/master/manual/naming-strategies.html
 	return models.Pais.findAll({
 		attributes:["Id","Nombre","Continente","Bandera"],
 		offset:paginado,
 		limit:10,
-		order: orden ==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
+		include: { 
+			association: 'Actividades' , 
+			//Atributos tabla de rompimiento
+			through: {
+				attributes: []
+			},
+			//Atributos tabla actividad
+			attributes:["Nombre"],
+			where:actividad? {Nombre:actividad}:""
+		},
+		order: orden==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
 	})
 	.then(res=>res.map(pais=>pais.dataValues))
 	.catch(err=>{
@@ -276,7 +288,7 @@ function getActividadesPais(idPais){
 	.then(pais=>{
 		//La s es por que sequelize espera un nombre el plural, pero como eso esta desactivado en
 		//el modelo por motivos esteticos se le mete a la mala
-		return pais.getActividads()
+		return pais.getActividades()
 	})
 	.then(actividades=>{
 		let data = actividades.map(acti=>{

@@ -1,13 +1,16 @@
 import {FETCH_PAISES_REQUEST, FETCH_PAISES_SUCCESS, FETCH_PAISES_ERROR} from "../actions/fetchPaises"
 import { FETCH_PAISES_NOMBRE_ERROR, FETCH_PAISES_NOMBRE_REQUEST, FETCH_PAISES_NOMBRE_SUCCESS } from "../actions/fetchPaisesNombre"
-import { CHANGE_FILTRO_CONTINENTE } from "../actions/filtroContinentes"
+import { CHANGE_FILTRO_ACTIVIDAD, CHANGE_FILTRO_CONTINENTE, CHANGE_FILTRO_ORDEN } from "../actions/filtros"
 
 const default_paises_reducer={
     paises:[],
     paginaSiguiente:0,
     consultando:false,
-    orden:"ASC",
-    filtroContinentes:"Todos"
+    filtrosActuales:{
+        orden:"ASC",
+        continente:"Todos",
+        actividad:null
+    }
 }
 
 export default function paisesReducer(status = default_paises_reducer, action){
@@ -24,25 +27,12 @@ export default function paisesReducer(status = default_paises_reducer, action){
                 paises: action.payload
             }
         case FETCH_PAISES_SUCCESS:
-            let paisesNuevos = []
-            let paginaSiguienteNueva = 0
-            if(action.payload.orden === status.orden){
-                paisesNuevos=[...status.paises, ...action.payload.paises]
-                paginaSiguienteNueva=status.paginaSiguiente+1
-            }
-            else{
-                paisesNuevos = [...action.payload.paises]
-                paginaSiguienteNueva = 1
-            }
             return {
                 ...status,
                 consultando:false,
-                paises: paisesNuevos,
-                paginaSiguiente: paginaSiguienteNueva,
-                orden:action.payload.orden
+                paises: [...status.paises, ...action.payload],
+                paginaSiguiente:status.paginaSiguiente+1                
             }
-            
-        
         case FETCH_PAISES_NOMBRE_REQUEST:
             return {
                 ...status,
@@ -67,8 +57,25 @@ export default function paisesReducer(status = default_paises_reducer, action){
         case CHANGE_FILTRO_CONTINENTE:
             return {
                 ...status,
-                filtroContinentes:action.payload
+                filtrosActuales:{...status.filtrosActuales, continente:action.payload}
             }
+        case CHANGE_FILTRO_ACTIVIDAD:
+            return {
+                ...status,
+                paises:[],
+                paginaSiguiente:0,
+                filtrosActuales:{...status.filtrosActuales, actividad:action.payload}
+            }
+        case CHANGE_FILTRO_ORDEN:
+            if(action.payload !== status.filtrosActuales.orden){
+                return {
+                    ...status,
+                    paises:[],
+                    paginaSiguiente:0,
+                    filtrosActuales:{...status.filtrosActuales, orden:action.payload}
+                }
+            }
+            return status
         default:
             return status
     }
