@@ -1,11 +1,10 @@
 
 .searchBar{
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: center;
     margin: 2% 0%;
     input[type=text]{
-        padding: 1% 4%;
         font-size: 110%;
         background: none;
         border-style: solid;
@@ -15,16 +14,32 @@
         border-top-left-radius: 10px;
         border-bottom-left-radius:10px ;
     }
-    input[type=button]{
+    .button{
+        padding: 1% 1%;
         background: none;
-        border: none;
+        border: solid;
+        border-color: rgb(82, 81, 81) ;
+        border-width: 1px;
         background: rgb(82, 81, 81);
-        padding: 10px 15px;
         font-size: 140%;
         color: white;
         outline: none;
-        
+        transition-duration: 0.4s;
+    }
+    .button:hover{
+        color: black;
+        background-color: white;
+    }
+    .buttonBuscarPaises{
+
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
+    }
+    .buttonReiniciar{
+        align-self: center;
+        margin: 0% 2%;
+        border-radius: 10px;
+        padding: 5px 10px;
+        font-size: 100%;
     }
 }

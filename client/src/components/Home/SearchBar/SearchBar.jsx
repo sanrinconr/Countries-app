@@ -6,7 +6,7 @@ import { useState } from "react"
 import {connect} from "react-redux"
 import fetchPaises from "../../../redux/actions/fetchPaises";
 import fetchPaisesNombre from "../../../redux/actions/fetchPaisesNombre";
-import { changeFiltroNombre } from "../../../redux/actions/filtros";
+import { changeFiltroActividad, changeFiltroContinentes, changeFiltroNombre, changeFiltroOrden } from "../../../redux/actions/filtros";
 import { cleanPaises } from "../../../redux/actions/limpiar";
 import "./SearchBar.scss"
 
@@ -20,8 +20,8 @@ function SearchBar({obtenerPaisesPorNombre, cargarPaisesCero}){
 
     return <div className="searchBar">
         <input type="text" value={input} onChange={handleChange}/>
-        <input type="button" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
-        <input type="button" value="Ver todos" onClick={()=>{setInput("");cargarPaisesCero()}}/>
+        <input type="button" className="button buttonBuscarPaises" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
+        <input type="button" className= "button buttonReiniciar" value="Ver todos" onClick={()=>{setInput("");cargarPaisesCero()}}/>
     </div>
 }
 
@@ -33,6 +33,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         },
         cargarPaisesCero:()=>{
             dispatch(changeFiltroNombre(null))
+            dispatch(changeFiltroContinentes("Todos"))
+            dispatch(changeFiltroOrden("ASC"))
+            dispatch(changeFiltroActividad(null))
             dispatch(cleanPaises())
             dispatch(fetchPaises())
         }
