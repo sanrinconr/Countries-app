@@ -1,6 +1,6 @@
 const request = require("supertest");
-const app = require("../src/app");
-const dbConnection = require("../src/sequelize/db")
+const app = require("../../app");
+const dbConnection = require("../../sequelize/db")
 
 describe('Pagina home', () => {
 	it('Pagina de bienvenida api', async (done) => {
