@@ -20,8 +20,8 @@ function SearchBar({obtenerPaisesPorNombre, cargarPaisesCero}){
 
     return <div className="searchBar">
         <input type="text" value={input} onChange={handleChange}/>
-        <input type="button" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
-        <input type="button" value="Ver todos" onClick={()=>{setInput("");cargarPaisesCero()}}/>
+        <input type="button" className="button buttonBuscarPaises" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
+        <input type="button" className= "button buttonReiniciar" value="Ver todos" onClick={()=>{setInput("");cargarPaisesCero()}}/>
     </div>
 }
 
