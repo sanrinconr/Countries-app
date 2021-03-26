@@ -5,7 +5,6 @@
 import { useState } from "react"
 import {connect} from "react-redux"
 import fetchPaises from "../../../redux/actions/fetchPaises";
-import fetchPaisesNombre from "../../../redux/actions/fetchPaisesNombre";
 import { changeFiltroActividad, changeFiltroContinentes, changeFiltroNombre, changeFiltroOrden } from "../../../redux/actions/filtros";
 import { cleanPaises } from "../../../redux/actions/limpiar";
 import "./SearchBar.scss"

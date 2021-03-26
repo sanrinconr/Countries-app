@@ -6,7 +6,7 @@ import "./ButtonVolver.scss"
 export default function ButtonVolver(){
     return <div className="containerButtonVolver">
         <Link to="/home">
-        <input className="buttonVolver" type="button" value={`Volver \<`}></input>
+        <input className="buttonVolver" type="button" value={`Volver <`}></input>
     </Link>
     </div>
 }

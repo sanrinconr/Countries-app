@@ -13,7 +13,7 @@ import { useEffect } from "react";
 function Home({cargarPaisesInicial}){
     useEffect(()=>{
         cargarPaisesInicial()
-    },[])
+    },[cargarPaisesInicial])
     return <div className="home">
         <Filtros/>
         <SearchBar/>

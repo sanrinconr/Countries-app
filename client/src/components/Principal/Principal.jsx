@@ -15,6 +15,8 @@ export default function Principal(){
         <picture>
         <source media="(max-width:700px)" srcSet={playaSmall}/>
         <source media="(max-width:1400px)" srcSet={playaMedium}/>
+        <source media="(max-width:1800px)" srcSet={playaLarge}/>
+
         <img alt="" src={playaSmall} />
         </picture>
         <Link to="/home">

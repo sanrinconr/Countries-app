@@ -11,7 +11,6 @@ function Filtros(props){
      const [actividades, setActividades] = useState([])
 
     //Relativo a los continentes
-    const continentes = props.filtrosActuales.continentes
     const setContinente = props.setContinente
 
     //Relativo a el orden
