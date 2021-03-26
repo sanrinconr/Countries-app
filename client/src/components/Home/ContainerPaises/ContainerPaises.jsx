@@ -14,10 +14,10 @@ import CardPais from "./CardPais/CardPais"
 import "./ContainerPaises.scss"
 import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
 function ContainerPaises({paises, filtrosActuales, consultando}){
+
     function filtrarContinente(paises, continente){
-        let salida = []
+        let salida =  []
         for(let pais of paises){
-            console.log(pais)
             if(continente === "Todos" || continente === pais.Continente){
                 salida.push(<CardPais
                     key={pais.Id} 
@@ -27,34 +27,22 @@ function ContainerPaises({paises, filtrosActuales, consultando}){
                     bandera={pais.Bandera}/>)
             }
         }
-
-        if(salida.length === 0){
-            return <div>
-                Oh!, no se encontraron paises, cambia de filtro o intenta una nueva consulta
-            </div>
-        }else{
-            return salida
+        if(salida.length === 0 && consultando){
+            return "Cargando..."
         }
+        if(salida.length === 0){
+            return "Oh!, intenta probar otro filtro o has una nueva consulta"
+        }
+        
+
+       return salida
     }
-    console.log(paises)
-    if(consultando){
-        return "Cargando..."
-    }else{
-        if(paises.length !== 0){
-            return <div>
+    return <div>
             <div className="containerPaises">
             {filtrarContinente(paises, filtrosActuales.continente)}
             </div>
             <ButtonMasPaises/>
         </div>
-        }else if(paises.length === 0){
-            return <div>
-                Oh!, no se encontraron paises, cambia de filtro o intenta una nueva consulta
-            </div>
-        }
-    }
-    
-    
 }
 
 //Para conocer que paises existen actualmente

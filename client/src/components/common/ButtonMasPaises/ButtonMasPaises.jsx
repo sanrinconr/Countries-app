@@ -1,9 +1,14 @@
 import { connect } from "react-redux";
 import fetchPaises from "../../../redux/actions/fetchPaises";
 import "./ButtonMasPaises.scss"
-function ButtonMasPaises({fet, paginaSiguiente, filtrosActuales}){
+
+function ButtonMasPaises({fet}){
+    function handleClick(e){
+        e.preventDefault();
+        fet()
+    }
     return <div className="containerMasElementos">
-        <button className = "btn btnGray" onClick={()=>fet(paginaSiguiente, filtrosActuales.orden)}>¡Mas paises!</button>
+        <button className = "btn btnGray" onClick={handleClick}>¡Mas paises!</button>
     </div>
 }
 
@@ -12,8 +17,8 @@ const mapStateToProps = (state)=>{
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    fet: (paginaSiguiente, orden) => {
-            dispatch(fetchPaises(paginaSiguiente, orden))
+    fet: () => {
+            dispatch(fetchPaises())
     }
 })
 
