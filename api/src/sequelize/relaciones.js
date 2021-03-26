@@ -12,7 +12,12 @@ function generarRelaciones(sequelize) {
 		singular: 'Actividad',
 		plural: 'Actividades'
 	  }});
-    sequelize.sync({alter:true})
+	if(process.env.FORCE_UPDATE_DB){
+		sequelize.sync({force:true})
+	}else{
+		sequelize.sync({alter:true})
+	}
+    
 }
 
 module.exports = { generarRelaciones };
