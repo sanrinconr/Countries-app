@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {crearActividad, obtenerActividades} = require("./db")
+const {crearActividad, obtenerActividades, eliminarActividad} = require("./db")
 const router = Router();
 
 router.post("/", function(req,res){
@@ -9,10 +9,17 @@ router.post("/", function(req,res){
         res.send(resp)
     })
 })
+
+router.post("/delete", function(req,res){
+    const {nombre} = req.body    
+    eliminarActividad(nombre)
+    .then(resp=>res.send({registrosEliminados:resp}))
+    .catch(err=>res.send({error:"Error al borrar activdades", details:err}))
+})
+
 router.get("/", function(req,res){
     obtenerActividades()
     .then(resp=>{
-        console.log(resp)
         res.send(resp)
     })
     .catch(err=>res.send(err))

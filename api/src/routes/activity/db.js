@@ -17,7 +17,6 @@ function crearActividad(nombre,dificultad,duracion,temporada, paises){
         return _vincularActividadConPais(actividad, paises)
     })
     .then((res)=>{
-        console.log(res)
         return {nombre,dificultad,duracion,temporada, paises}
     })
     .catch(err=>{
@@ -80,11 +79,21 @@ function obtenerActividades(){
         attributes:["Nombre"]
     })
 	.then(res=>{
-        console.log(res)
         return res.map(act=>act.Nombre)
     })
 	.catch(err=>{
 		return {error:"Ocurrio un error obteniendo actividades", details:err}
 	})
 }
-module.exports = {crearActividad,obtenerActividades}
+function eliminarActividad(Nombre){
+    return models.Actividad.destroy({
+        where:{
+            Nombre
+        }
+    })
+    .then(res=>{
+        return res.toString()
+    })
+    
+}
+module.exports = {crearActividad,obtenerActividades, eliminarActividad}
