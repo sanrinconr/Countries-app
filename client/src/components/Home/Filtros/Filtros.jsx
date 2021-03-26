@@ -55,7 +55,7 @@ function Filtros(props){
     return <div className="filtros">
                 <span>Ordenar por  </span>
                 <div className="filtroAlfabetico">
-                       <select value={orden} className='select' name="continente"  onChange={handleChangeAlfabeto}>
+                       <select value={orden?orden:"ASC"} className='select' name="continente"  onChange={handleChangeAlfabeto}>
                         <option value="ASC">A-Z</option>
                         <option value="DESC">Z-A</option>
                     </select>
