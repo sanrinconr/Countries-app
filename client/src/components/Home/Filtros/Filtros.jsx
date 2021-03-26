@@ -19,7 +19,7 @@ function Filtros(props){
     const cambiarOrden = props.cambiarOrden   
 
     //Actividad actual, desde redux
-    const actividad =  props.filtroActividad
+    const actividad =  props.filtrosActuales.actividad
     const cambiarActividad = props.cambiarActividad
 
     useEffect(()=>{
@@ -49,6 +49,7 @@ function Filtros(props){
                 cambiarActividad(e.target.value)
             }
             props.fetchPaises()
+            console.log(actividad)
         }
     }
     return <div className="filtros">
@@ -70,7 +71,7 @@ function Filtros(props){
                     </select>
                 </div>
                 <div className="filtroActividades">
-                    <select className='select' name="actividades"  onChange={handleChangeActividad}>
+                    <select value={actividad?actividad:"Todas"} className='select' name="actividades"  onChange={handleChangeActividad}>
                         {actividades.map((act,i)=><option key={i} value={act}>{act}</option>)}
                     </select>
                 </div>
