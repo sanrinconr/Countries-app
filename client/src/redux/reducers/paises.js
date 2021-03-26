@@ -89,6 +89,7 @@ export default function paisesReducer(status = default_paises_reducer, action){
                 paises:[],
                 paginaSiguiente:0,
             }
+        
         default:
             return status
     }
