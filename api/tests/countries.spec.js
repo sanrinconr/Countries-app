@@ -47,7 +47,7 @@ describe("Filtros", () => {
 
 
 
-
+//https://github.com/facebook/jest/issues/7287
 afterAll(() => async (done) => {
 	// Closing the DB connection allows Jest to exit successfully.
 	await dbConnection.close()
