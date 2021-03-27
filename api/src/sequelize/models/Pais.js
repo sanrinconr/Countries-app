@@ -5,7 +5,7 @@ const {
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
 	// defino el modelo
-	sequelize.define('Pais', {
+	const Actividad = sequelize.define('Pais', {
 		Id: {
 			type: DataTypes.STRING(3),
 			primaryKey: true
@@ -40,4 +40,5 @@ module.exports = (sequelize) => {
 		},
 	},{freezeTableName: true,
 	timestamps:false});
+	return Actividad
 };

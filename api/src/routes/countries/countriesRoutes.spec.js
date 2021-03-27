@@ -1,55 +1,69 @@
+const { expect } = require("chai");
+const supertest = require("supertest");
 const request = require("supertest");
 const app = require("../../app");
 const dbConnection = require("../../sequelize/db")
+const s = supertest(app)
+
 
 describe('Pagina home', () => {
-	it('Pagina de bienvenida api', async (done) => {
-		const response = await request(app).get('/')
-		expect(response.statusCode).toBe(200)
-		expect(response.body.mensaje).toBe("Bienvenido a la api de paises")
-		done()
+	afterAll(() => async () => await dbConnection.models.close());
+	test("GET /", async()=>{
+		await supertest(app).get("/")
+		.expect(200)
+		.then(response=>{
+			expect(response.body.mensaje).equal("Bienvenido a la api de paises")
+		})
 	})
 })
 
 describe('Pagina countries', () => {
-	it('Se obtinen los primeros 10 paises', async (done) => {
-		const response = await request(app).get('/countries')
-		expect(response.statusCode).toBe(200)
-		expect(response.body.length).toBe(10)
-		done()
-	})
-	it('El primer pais debe ser AFG', async (done) => {
-		const response = await request(app).get('/countries')
-		expect(response.body[0].Id).toBe("AFG")
-		done()
-	})
-	it('Paginado, primer pais de la pagina 1', async (done) => {
-		const response = await request(app).get('/countries?page=1')
-		expect(response.body[0].Id).toBe("ARG")
-		done()
+	afterAll(() => async () => await dbConnection.models.close());
+
+	test("GET /countries primeros 10 paises", async(done)=>{
+		await supertest(app).get("/countries")
+		.expect(200)
+		.then(response=>{
+			expect(response.body.length).equal(10)
+			done()
+		})
+	},30000)
+
+	test("GET /countries?page=1 primeros 10 paises", async(done)=>{
+		await supertest(app).get("/countries?page=1")
+		.expect(200)
+		.then(response=>{
+			expect(response.body[0].Id).equal("ARG")
+			done()
+		})
 	})
 })
 
 describe("Filtros", () => {
-	it("Filtrado de A-Z", async (done) => {
-		const response = await request(app).get('/countries?page=0&orden=ASC  ')
-		expect(response.statusCode).toBe(200)
-		expect(response.body[0].Id).toBe("AFG")
-		done()
+	afterAll(() => async () => await dbConnection.models.close());
+
+	test("GET /countries?page=0&orden=ASC  A-Z", async(done)=>{
+		await supertest(app).get("/countries?page=0&orden=ASC")
+		.expect(200)
+		.then(response=>{
+			expect(response.body[0].Id).equal("AFG")
+			done()
+		})
 	})
-	it("Filtrado Z-A", async (done) => {
-		const response = await request(app).get('/countries?page=0&orden=DESC  ')
-		expect(response.statusCode).toBe(200)
-		expect(response.body[0].Id).toBe("ZWE")
-		done()
+	test("GET /countries?page=0&orden=ASC  Z-A", async(done)=>{
+		await supertest(app).get("/countries?page=0&orden=DESC")
+		.expect(200)
+		.then(response=>{
+			expect(response.body[0].Id).equal("ZWE")
+			done()
+		})
 	})
 })
 
-
-
-//https://github.com/facebook/jest/issues/7287
 afterAll(() => async (done) => {
 	// Closing the DB connection allows Jest to exit successfully.
 	await dbConnection.close()
 	done()
 });
+
+

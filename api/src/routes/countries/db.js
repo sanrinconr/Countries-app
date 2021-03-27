@@ -91,7 +91,9 @@ function getPaises(pagina, orden, actividad, nombre){
 		},
 		order: orden==="DESC" ? [['Nombre', "DESC"]]:[["Nombre"]],
 	})
-	.then(res=>res.map(pais=>pais.dataValues))
+	.then(res=>{
+		return res
+		return res.map(pais=>pais.dataValues)})
 	.catch(err=>{
 		return {error:"No se pudo obtener los paises", details:err}
 	})
