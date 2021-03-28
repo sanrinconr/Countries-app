@@ -53,7 +53,7 @@ export default function FormNuevaActividad(){
         .catch(err=>console.log(err.data))
       }
       return (
-          <div className="formNuevaActividad" >
+          <div className="formNuevaActividad" data-testid="formulario" >
             <form >
                 <div className="title">
                     <span>Nueva actividad</span>
@@ -117,7 +117,7 @@ export default function FormNuevaActividad(){
                         })}
                         <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
                     </div>
-                    <input className={consultando?"desactivado":"input buttonSubmit"} onClick={guardarActividad} type="submit" value="Crear actividad!"/>
+                    <input className={consultando?"desactivado":"input buttonSubmit"} onClick={guardarActividad} type="submit" value="Crear actividad!" aria-label="boton-nueva-actividad"/>
                 </div>
           </form>
           </div>
