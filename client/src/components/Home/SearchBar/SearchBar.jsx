@@ -17,7 +17,7 @@ function SearchBar({obtenerPaisesPorNombre, cargarPaisesCero}){
         setInput(event.target.value)
     }
 
-    return <div className="searchBar">
+    return <div className="searchBar" aria-label="searchBarContainer">
         <input type="text" value={input} onChange={handleChange}/>
         <input type="button" className="button buttonBuscarPaises" value="buscar" onClick={()=>obtenerPaisesPorNombre(input)}/>
         <input type="button" className= "button buttonReiniciar" value="Ver todos" onClick={()=>{setInput("");cargarPaisesCero()}}/>
