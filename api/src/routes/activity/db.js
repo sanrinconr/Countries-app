@@ -17,7 +17,11 @@ function crearActividad(nombre,dificultad,duracion,temporada, paises){
         return _vincularActividadConPais(actividad, paises)
     })
     .then((res)=>{
-        return {nombre,dificultad,duracion,temporada, paises}
+        if(res){
+            return {nombre,dificultad,duracion,temporada, paises}
+        }else{
+            return {error:"Error al crear actividad",detail:"Ningun pais es valido"}
+        }
     })
     .catch(err=>{
         return {error:"Error al crear actividad", detail:err}
@@ -29,6 +33,7 @@ function crearActividad(nombre,dificultad,duracion,temporada, paises){
  * Con esta funcion se vinculan los paises pedidos por el usuario a la nueva actividad
  */
 function _vincularActividadConPais(objActividad, paises){
+    if(!paises) return false
     return _garantizarPaisesEnBD(paises)
     .then(()=>{
         return _obtenerPaises(paises)
@@ -39,6 +44,13 @@ function _vincularActividadConPais(objActividad, paises){
         }
         //Ese metodo addPais es creado automaticamente por sequelize
         objActividad.addPais(paises)
+    })
+    .then(()=>{
+        return true
+    })
+    .catch(()=>{
+        objActividad.destroy()
+        .then(res=>false)
     })
     
 }
