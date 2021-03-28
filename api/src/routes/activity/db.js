@@ -77,10 +77,7 @@ function _obtenerPaises(paises){
         return models.Pais.findAll({
             where:{
                 Nombre:{
-                    [Op.or]:paises.map(pais=>{
-                        // return {[Op.like]:`%${pais}%`}
-                        return {[Op.like]:`%${pais}%`}
-                    })
+                    [Op.or]:paises
                 }
             },
         })
