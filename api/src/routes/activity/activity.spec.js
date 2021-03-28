@@ -11,7 +11,7 @@ const dataInsert = {
 	dificultad: "1",
 	duracion: "12",
 	temporada: "Invierno",
-	paises: ["COL"]
+	paises: ["Colombia", "Argentina"]
 }
 describe("Actividad", () => {
 	//Se elimina testing antes por si ya existe
@@ -26,6 +26,7 @@ describe("Actividad", () => {
 		await supertest(app).post('/activity').send(dataInsert)
 		.expect(200)
 		.then(response=>{
+			console.log(response.body)
 			expect(response.body.nombre).toBe(dataInsert.nombre)
 			done()
 		})

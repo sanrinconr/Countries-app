@@ -6,6 +6,8 @@
     font-size: 30px;
 
     form{
+        background-color: #F5F5F5;
+
         display: flex;
         flex-flow: column nowrap;
         padding: 3%;
@@ -58,12 +60,12 @@
             .horizontalLine {
                 border-top: 1px solid rgba(131, 131, 131, 0.753);
                 width: 90%;
-                margin-top: 50px;
+                margin-top: 20px;
               }
             .paises{
                 display: flex;
                 flex-flow: column nowrap;
-                margin-top: 5%;
+                margin-top: 2%;
                 span{
                     font-size: 110%; 
                 }
@@ -111,11 +113,11 @@
 
             //Cuando se esta haciendo la peticion
             .desactivado{
-                background-color: grey;
+                background-color: #c62828;
                 border-style: solid;
                 border-radius: 10px;
                 border-width: 1px;
-                border-color: grey;
+                border-color: none;
                 color: white;
                 padding: 3%;
                 font-size: 20px;
@@ -135,14 +137,16 @@
                 background-position: right 5px center;
             }
             .buttonSubmit{
-                background-color: #3f51b5;
+                background-color: #4caf50;
                 color: white;
-                border-color:#3f51b5 ;
+                border-color:#4caf50 ;
                 transition-duration: 0.4s;
             }
             .buttonSubmit:hover{
                 color: black;
                 background-color: white;
+                border-color:#e65100 ;
+
             }
         }
 

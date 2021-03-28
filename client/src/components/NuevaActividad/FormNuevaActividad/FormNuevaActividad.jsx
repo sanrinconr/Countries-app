@@ -41,6 +41,7 @@ export default function FormNuevaActividad(){
         e.preventDefault()
         setConsultando(true)
         const {nombre, dificultad,duracion,temporada} = inputActividad
+
         axios.post(process.env.REACT_APP_URL_API+"activity",{
             nombre, dificultad,duracion,temporada,paises:Object.keys(paises).map(claveId=>{
                 return paises[claveId].value
@@ -48,9 +49,23 @@ export default function FormNuevaActividad(){
         })
         .then(res=>{
             setConsultando(false)
-            console.log(res.data)
+            return res.data
         })
-        .catch(err=>console.log(err.data))
+        .then(res=>{
+            if(res.hasOwnProperty("error")){
+    
+                if(res.detail === "Ningun pais es valido"){
+                    alert(`¡Oh no! ocurrio un error: \n Verifica el listado de paises`)
+                }else if(res.detail.errors[0].message === "Nombre must be unique"){
+                    alert(`¡Oh no! ocurrio un error: \n La actividad ${nombre} ya existe`)
+                }
+            }else{
+                alert(`¡Actividad ${nombre} creada con exito!`)
+            }
+        })
+        .catch(err=> {
+            console.log(err)
+            alert(`¡Oh no!, ocurrio un error, intentalo de nuevo`)})
       }
       return (
           <div className="formNuevaActividad" data-testid="formulario" >
@@ -117,7 +132,7 @@ export default function FormNuevaActividad(){
                         })}
                         <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
                     </div>
-                    <input className={consultando?"desactivado":"input buttonSubmit"} onClick={guardarActividad} type="submit" value="Crear actividad!" aria-label="boton-nueva-actividad"/>
+                    <input className={ consultando?"desactivado":"input buttonSubmit"} disabled={consultando?"disables":""} onClick={guardarActividad} type="submit" value="Crear actividad!" aria-label="boton-nueva-actividad"/>
                 </div>
           </form>
           </div>
