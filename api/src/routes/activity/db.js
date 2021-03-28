@@ -76,9 +76,12 @@ function _garantizarPaisesEnBD(paises){
 function _obtenerPaises(paises){
         return models.Pais.findAll({
             where:{
-                [Op.or]:paises.map(pais=>{
-                    return {Id:pais}
-                })
+                Nombre:{
+                    [Op.or]:paises.map(pais=>{
+                        // return {[Op.like]:`%${pais}%`}
+                        return {[Op.like]:`%${pais}%`}
+                    })
+                }
             },
         })
         .catch(err=>{
