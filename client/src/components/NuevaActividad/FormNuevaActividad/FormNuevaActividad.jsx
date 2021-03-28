@@ -51,17 +51,20 @@ export default function FormNuevaActividad(){
         .then(res=>{
             setConsultando(false)
             if(res.hasOwnProperty("error")){
-                console.log(res.detail.errors[0].message)
-                if(res.detail.errors[0].message){
-                    alert(`¡Oh no! ocurrio un error: \n ${res.detail.errors[0].message}`)
-                }else{
-                    alert(`¡Oh no!, ocurrio un error, verifica que los paises existan`)
+    
+                console.log(res.detail)
+                if(res.detail === "Ningun pais es valido"){
+                    alert(`¡Oh no! ocurrio un error: \n Verifica el listado de paises`)
+                }else if(res.detail.errors[0].message === "Nombre must be unique"){
+                    alert(`¡Oh no! ocurrio un error: \n La actividad ${nombre} ya existe`)
                 }
             }else{
                 alert(`¡Actividad ${nombre} creada con exito!`)
             }
         })
-        .catch(err=> alert(`¡Oh no!, ocurrio un error, intentalo de nuevo`))
+        .catch(err=> {
+            console.log(err)
+            alert(`¡Oh no!, ocurrio un error, intentalo de nuevo`)})
       }
       return (
           <div className="formNuevaActividad" data-testid="formulario" >
