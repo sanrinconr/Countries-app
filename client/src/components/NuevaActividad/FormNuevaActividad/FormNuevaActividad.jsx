@@ -47,12 +47,13 @@ export default function FormNuevaActividad(){
                 return paises[claveId].value
             })
         })
-        .then(res=>res.data)
         .then(res=>{
             setConsultando(false)
+            return res.data
+        })
+        .then(res=>{
             if(res.hasOwnProperty("error")){
     
-                console.log(res.detail)
                 if(res.detail === "Ningun pais es valido"){
                     alert(`¡Oh no! ocurrio un error: \n Verifica el listado de paises`)
                 }else if(res.detail.errors[0].message === "Nombre must be unique"){
@@ -131,7 +132,7 @@ export default function FormNuevaActividad(){
                         })}
                         <div > <button className="nuevoPais" onClick={nuevoSpanPais}>+</button></div>
                     </div>
-                    <input className={consultando?"desactivado":"input buttonSubmit"} onClick={guardarActividad} type="submit" value="Crear actividad!" aria-label="boton-nueva-actividad"/>
+                    <input className={ consultando?"desactivado":"input buttonSubmit"} disabled={consultando?"disables":""} onClick={guardarActividad} type="submit" value="Crear actividad!" aria-label="boton-nueva-actividad"/>
                 </div>
           </form>
           </div>
