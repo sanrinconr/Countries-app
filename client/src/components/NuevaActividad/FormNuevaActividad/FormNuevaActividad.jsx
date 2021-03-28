@@ -41,16 +41,27 @@ export default function FormNuevaActividad(){
         e.preventDefault()
         setConsultando(true)
         const {nombre, dificultad,duracion,temporada} = inputActividad
+
         axios.post(process.env.REACT_APP_URL_API+"activity",{
             nombre, dificultad,duracion,temporada,paises:Object.keys(paises).map(claveId=>{
                 return paises[claveId].value
             })
         })
+        .then(res=>res.data)
         .then(res=>{
             setConsultando(false)
-            console.log(res.data)
+            if(res.hasOwnProperty("error")){
+                console.log(res.detail.errors[0].message)
+                if(res.detail.errors[0].message){
+                    alert(`¡Oh no! ocurrio un error: \n ${res.detail.errors[0].message}`)
+                }else{
+                    alert(`¡Oh no!, ocurrio un error, verifica que los paises existan`)
+                }
+            }else{
+                alert(`¡Actividad ${nombre} creada con exito!`)
+            }
         })
-        .catch(err=>console.log(err.data))
+        .catch(err=> alert(`¡Oh no!, ocurrio un error, intentalo de nuevo`))
       }
       return (
           <div className="formNuevaActividad" data-testid="formulario" >
