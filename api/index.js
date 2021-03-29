@@ -24,6 +24,7 @@ const  db = require('./src/sequelize/db.js');
 db.authenticate().
 then(()=>console.log("autenticado!"))
 .catch(()=>console.log("No se pudo ingresar a la db"))
-server.listen(3001, () => {
+//https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
+server.listen(process.env.PORT || 3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
 });

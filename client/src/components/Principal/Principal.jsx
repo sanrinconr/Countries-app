@@ -20,7 +20,7 @@ export default function Principal(){
         <img alt="" src={playaSmall} />
         </picture>
         <Link to="/home">
-            <button className="botonPresentacion" >¡Empezar!</button>
+            <button className="botonPresentacion" >¡Empezar en github actions.!</button>
         </Link>
         
     </div> 
