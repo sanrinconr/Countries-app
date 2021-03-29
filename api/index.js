@@ -24,6 +24,6 @@ const  db = require('./src/sequelize/db.js');
 db.authenticate().
 then(()=>console.log("autenticado!"))
 .catch(()=>console.log("No se pudo ingresar a la db"))
-server.listen(3001, () => {
+server.listen(process.env.PORT || 3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
 });
