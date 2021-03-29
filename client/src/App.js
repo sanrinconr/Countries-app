@@ -11,7 +11,7 @@ import NavBar from './components/common/NavBar/NavBar';
 import NuevaActividad from './components/NuevaActividad/NuevaActividad';
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.REACT_APP_URL_BASE}>
     <Switch>
       <Route path="/nuevaActividad">
         <NavBar/>
