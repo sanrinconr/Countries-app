@@ -14,7 +14,9 @@ jobs:
         working-directory: ./api
     steps:
       - uses: actions/checkout@v2
+        working-directory: ./api
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        working-directory: ./api
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "apicountry" #Must be unique in Heroku
