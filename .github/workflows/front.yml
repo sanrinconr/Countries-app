@@ -20,6 +20,9 @@ jobs:
         run: |
           npm install
           npm run build
+        env:
+          REACT_APP_URL_API: http://192.168.0.50:3001/
+          REACT_APP_URL_BASE: /FT10-PI-Countries
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
