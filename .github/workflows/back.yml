@@ -2,7 +2,7 @@ name: Build and Deploy to heroku
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - api/**
       - .github/workflows/back.yml
