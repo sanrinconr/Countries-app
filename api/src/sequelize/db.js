@@ -27,6 +27,7 @@ const sequelize = new Sequelize(DATABASE_URL? DATABASE_URL:`postgres://${DB_USER
 		rejectUnauthorized: false
 	 	}:"",
      }
+	 
 });
 
 const basename = path.basename(__filename);
