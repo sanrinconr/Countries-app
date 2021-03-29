@@ -17,6 +17,7 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.8"
   },
+  "homepage": "/FT10-PI-Countries",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
