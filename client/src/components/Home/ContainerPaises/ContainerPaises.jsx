@@ -13,8 +13,7 @@ import CardPais from "./CardPais/CardPais"
 
 import "./ContainerPaises.scss"
 import ButtonMasPaises from "../../common/ButtonMasPaises/ButtonMasPaises";
-function ContainerPaises({paises, filtrosActuales, consultando}){
-
+function ContainerPaises({paises, filtrosActuales, consultando, error}){
     function filtrarContinente(paises, continente){
         let salida =  []
         for(let pais of paises){
@@ -39,7 +38,7 @@ function ContainerPaises({paises, filtrosActuales, consultando}){
     }
     return <div>
             <div className="containerPaises">
-            {filtrarContinente(paises, filtrosActuales.continente)}
+            {error? `Ocurrio un error ${error}`:filtrarContinente(paises, filtrosActuales.continente)}
             </div>
             <ButtonMasPaises/>
         </div>

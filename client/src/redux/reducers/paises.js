@@ -1,5 +1,4 @@
 import {FETCH_PAISES_REQUEST, FETCH_PAISES_SUCCESS, FETCH_PAISES_ERROR} from "../actions/fetchPaises"
-import { FETCH_PAISES_NOMBRE_ERROR, FETCH_PAISES_NOMBRE_REQUEST, FETCH_PAISES_NOMBRE_SUCCESS } from "../actions/fetchPaisesNombre"
 import { CHANGE_FILTRO_ACTIVIDAD, CHANGE_FILTRO_CONTINENTE, CHANGE_FILTRO_NOMBRE, CHANGE_FILTRO_ORDEN } from "../actions/filtros"
 import { CLEAN_PAISES } from "../actions/limpiar"
 
@@ -12,7 +11,8 @@ const default_paises_reducer={
         continente:"Todos",
         actividad:null,
         nombre:null
-    }
+    },
+    error:null
 }
 
 export default function paisesReducer(status = default_paises_reducer, action){
@@ -26,35 +26,16 @@ export default function paisesReducer(status = default_paises_reducer, action){
             return {
                 ...status,
                 consultando:false,
-                paises: action.payload
+                paises: [],
+                error: action.payload
             }
         case FETCH_PAISES_SUCCESS:
             return {
                 ...status,
                 consultando:false,
                 paises: [...status.paises, ...action.payload],
-                paginaSiguiente:status.paginaSiguiente+1                
-            }
-        case FETCH_PAISES_NOMBRE_REQUEST:
-            return {
-                ...status,
-                consultando:true,
-                paises: action.payload.limpiar ? [] : status.paises,
-                paginaSiguiente: action.payload.limpiar? 0 : status.paginaSiguiente
-            }
-        case FETCH_PAISES_NOMBRE_ERROR:
-            return {
-                ...status,
-                consultando:false,
-                paises: action.payload
-            }
-
-        case FETCH_PAISES_NOMBRE_SUCCESS:
-            return {
-                ...status,
-                consultando:false,
-                paises: [...status.paises, ...action.payload],
-                paginaSiguiente: status.paginaSiguiente+1
+                paginaSiguiente:status.paginaSiguiente+1,
+                error: null                
             }
         case CHANGE_FILTRO_CONTINENTE:
             return {
