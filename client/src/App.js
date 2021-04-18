@@ -9,7 +9,19 @@ import Home from './components/Home/Home';
 import Principal from './components/Principal/Principal';
 import NavBar from './components/common/NavBar/NavBar';
 import NuevaActividad from './components/NuevaActividad/NuevaActividad';
+import { useEffect } from 'react';
+import axios from 'axios';
 function App() {
+  useEffect(()=>{
+    console.log(process.env.REACT_APP_URL_API)
+    axios.get(process.env.REACT_APP_URL_API)
+    .then(()=>{
+      console.log("Ping realizado!")
+    })
+    .catch(()=>{
+      console.log("Error en el ping")
+    })
+  })
   return (
     <BrowserRouter>
     <Switch>
