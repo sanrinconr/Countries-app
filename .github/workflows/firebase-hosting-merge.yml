@@ -13,12 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      run: |
-        touch .env
-        echo 'REACT_APP_URL_API=https://apicountry.herokuapp.com/' >> .env
-      working-directory: ./client
-      - run: npm i && npm run build
+
+      - name: Define variables
+        run: echo "Variable are ${REACT_APP_URL_API}"
+        env:
+          REACT_APP_URL_APP:"https://us-central1-paises-e1544.cloudfunctions.net/api/"
         working-directory: ./client
+
+      - name: Building
+        run: npm i && npm run build
+        env:
+            REACT_APP_URL_APP:"https://us-central1-paises-e1544.cloudfunctions.net/api/"
+        working-directory: ./client
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
