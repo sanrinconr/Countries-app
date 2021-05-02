@@ -11,7 +11,7 @@ jobs:
       - name: "Bajando el codifo"
         uses: actions/checkout@v2
 
-       - name: Define variables
+      - name: Define variables
         run: echo "Variable are ${REACT_APP_URL_API}"
         env:
           REACT_APP_URL_APP:"https://us-central1-paises-e1544.cloudfunctions.net/api/"
