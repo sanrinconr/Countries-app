@@ -26,7 +26,7 @@ describe("Actividad", () => {
 		await supertest(app).post('/activity').send(dataInsert)
 		.expect(200)
 		.then(response=>{
-			console.log(response.body)
+			
 			expect(response.body.nombre).toBe(dataInsert.nombre)
 			done()
 		})

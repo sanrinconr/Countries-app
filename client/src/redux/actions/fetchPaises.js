@@ -2,6 +2,7 @@
  * Este conjunto de acciones se encarga de obtener los paises que se observan en \home
  */
 import axios from "axios"; 
+import { getURLApi } from "../../config/api";
 
 export const FETCH_PAISES_REQUEST = "FETCH_PAISES_REQUEST"
 export const FETCH_PAISES_SUCCESS = "FETCH_PAISES_SUCCESS"
@@ -30,7 +31,7 @@ export default function fetchPaises(){
     //El dispach se recibe gracias a thunk
     return (dispatch, getState) =>{
         dispatch(_fetchPaisesRequest())
-        axios.get(process.env.REACT_APP_URL_API+"countries",{
+        axios.get(getURLApi()+"countries",{
             params:{
                 page:getState().paisesReducer.paginaSiguiente, 
                 orden:getState().paisesReducer.filtrosActuales.orden, 
