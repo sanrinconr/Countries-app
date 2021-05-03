@@ -13,12 +13,14 @@ jobs:
 
       - name: Define variables
         run: echo "Variable are ${REACT_APP_URL_API}"
-        env: REACT_APP_URL_APP:https://us-central1-paises-e1544.cloudfunctions.net/api/
+        env: 
+          REACT_APP_URL_APP: https://us-central1-paises-e1544.cloudfunctions.net/api/
         working-directory: ./client
 
       - name: Building
         run: npm i && npm run build
-        env: REACT_APP_URL_APP:https://us-central1-paises-e1544.cloudfunctions.net/api/
+        env: 
+          REACT_APP_URL_APP: https://us-central1-paises-e1544.cloudfunctions.net/api/
         working-directory: ./client
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
