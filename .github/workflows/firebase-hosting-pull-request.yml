@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Define variables
-        run: echo "Variable are ${REACT_APP_URL_API}"
+        run: echo "Variable are $REACT_APP_URL_API"
         env: 
           REACT_APP_URL_APP: https://us-central1-paises-e1544.cloudfunctions.net/api/
         working-directory: ./client
@@ -23,7 +23,8 @@ jobs:
           REACT_APP_URL_APP: https://us-central1-paises-e1544.cloudfunctions.net/api/
         working-directory: ./client
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Subiendo a firebase 
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PAISES_E1544 }}'
