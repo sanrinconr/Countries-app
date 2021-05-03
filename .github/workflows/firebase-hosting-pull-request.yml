@@ -28,7 +28,6 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PAISES_E1544 }}'
-          channelId: live
           projectId: paises-e1544
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
