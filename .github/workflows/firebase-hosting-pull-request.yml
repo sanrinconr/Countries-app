@@ -18,7 +18,7 @@ jobs:
         working-directory: ./client
 
       - name: Building
-        run: npm i && npm run build
+        run: yarn install && yarn build
         env: 
           REACT_APP_URL_APP: https://us-central1-paises-e1544.cloudfunctions.net/api/
         working-directory: ./client
