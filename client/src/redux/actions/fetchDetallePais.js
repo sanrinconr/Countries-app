@@ -3,6 +3,7 @@
  * al backe-end
  */
 import axios from "axios"; 
+import { getURLApi } from "../../config/api";
 
 export const FETCH_DETALLE_PAIS_REQUEST = "FETCH_DETALLE_PAIS_REQUEST"
 export const FETCH_DETALLE_PAIS_SUCCESS = "FETCH_DETALLE_PAIS_SUCCESS"
@@ -31,7 +32,7 @@ export default function fetchDetallePais(id){
     //El dispach se recibe gracias a thunk
     return (dispatch) =>{
         dispatch(_fetchDetallePaisRequest())
-        axios.get(process.env.REACT_APP_URL_API+`countries/${id}`)
+        axios.get(getURLApi()+`countries/${id}`)
         .then(res=>{
             dispatch(_fetchDetallePaisSuccess(res.data))
         })

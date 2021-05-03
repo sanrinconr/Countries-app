@@ -28,8 +28,6 @@ Esta distribuido en dos partes, el back-end, que se encuentra alojado en Heroku 
 
 <img src="assets/arquitectura.png" width="90%"  />
 
-
-
 ### Por que no se utilizaron los filtros de la api?
 
 Por aprender!, los filtros necesarios se implementaron en el back-end, de esta manera solo se utilizaron dos rutas ofrecidas por la api
@@ -37,3 +35,6 @@ Por aprender!, los filtros necesarios se implementaron en el back-end, de esta m
   - GET https://restcountries.eu/rest/v2/all
   - GET https://restcountries.eu/rest/v2/name/{name}
 
+## Puedes ver el proyecto en vivo aquí!
+
+### [paises-sanrinconr.vercel.app](https://paises-sanrinconr.vercel.app)

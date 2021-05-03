@@ -11,10 +11,11 @@ import NavBar from './components/common/NavBar/NavBar';
 import NuevaActividad from './components/NuevaActividad/NuevaActividad';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { getURLApi } from './config/api';
 function App() {
+  console.log(getURLApi())
   useEffect(()=>{
-    console.log(process.env.REACT_APP_URL_API)
-    axios.get(process.env.REACT_APP_URL_API)
+    axios.get(getURLApi())
     .then(()=>{
       console.log("Ping realizado!")
     })

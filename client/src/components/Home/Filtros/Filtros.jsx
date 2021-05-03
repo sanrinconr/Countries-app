@@ -6,6 +6,7 @@ import {changeFiltroContinentes, changeFiltroActividad, changeFiltroOrden} from 
 
 import axios from "axios"
 import "./Filtros.scss"
+import { getURLApi } from "../../../config/api"
 function Filtros(props){
      //Relativo actividades, los filtros del componente
      const [actividades, setActividades] = useState([])
@@ -22,7 +23,7 @@ function Filtros(props){
     const cambiarActividad = props.cambiarActividad
 
     useEffect(()=>{
-        axios.get(process.env.REACT_APP_URL_API+"activity")
+        axios.get(getURLApi()+"activity")
         .then(res=>res.data)
         .then(res=>setActividades(["Todas",...res]))
     },[])
