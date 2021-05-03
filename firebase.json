@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "site": "paises",
+    "public": "client/build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "remoteconfig": {}
+}
