@@ -33,7 +33,6 @@ export default function FormNuevaActividad(){
         let elemento = {...paises[cantPais]}
         elemento.value = ""
         original[cantPais] = elemento
-        console.log(original)
         setPaises(original)
         setCantPais(cantPais+1)
       }
@@ -65,7 +64,6 @@ export default function FormNuevaActividad(){
             }
         })
         .catch(err=> {
-            console.log(err)
             alert(`¡Oh no!, ocurrio un error, intentalo de nuevo`)})
       }
       return (

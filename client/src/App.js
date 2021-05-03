@@ -13,7 +13,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { getURLApi } from './config/api';
 function App() {
-  console.log(getURLApi())
   useEffect(()=>{
     axios.get(getURLApi())
     .then(()=>{

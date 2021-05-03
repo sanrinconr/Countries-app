@@ -49,7 +49,6 @@ function Filtros(props){
                 cambiarActividad(e.target.value)
             }
             props.fetchPaises()
-            console.log(actividad)
         }
     }
     return <div className="filtros">
