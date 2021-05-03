@@ -4,19 +4,12 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 
-env: 
-  REACT_APP_URL_API: https://us-central1-paises-e1544.cloudfunctions.net/api/
-
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
     steps:
-      - name: "Bajando el codifo"
+      - name: "Descargando repo"
         uses: actions/checkout@v2
-
-      - name: Define variables
-        run: echo "Variable are $REACT_APP_URL_API"
-        working-directory: ./client
 
       - name: Building
         run: yarn install && yarn build

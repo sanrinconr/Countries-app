@@ -1,6 +1,7 @@
 import {useState } from "react"
 import axios from "axios"
 import "./FormNuevaActividad.scss"
+import { getURLApi } from "../../../config/api"
 export default function FormNuevaActividad(){
     const [cantPais, setCantPais] = useState(1)
     const [paises, setPaises] = useState({0:{value:""}})
@@ -42,7 +43,7 @@ export default function FormNuevaActividad(){
         setConsultando(true)
         const {nombre, dificultad,duracion,temporada} = inputActividad
 
-        axios.post(process.env.REACT_APP_URL_API+"activity",{
+        axios.post(getURLApi()+"activity",{
             nombre, dificultad,duracion,temporada,paises:Object.keys(paises).map(claveId=>{
                 return paises[claveId].value
             })
